@@ -1,27 +1,148 @@
 import { Mail, Phone, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
 import { useState } from "react"
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [error, setError] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({});
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         subject: '',
         message: '',
-        loaded: false
     });
 
+    const serviceId = import.meta.env.VITE_SERVICE_ID;
+    const notifyId = import.meta.env.VITE_NOTIFY_TEMPLATE_ID;
+    const autoreplyId = import.meta.env.VITE_AUTOREPLY_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+    // Validate individual field
+    const validateField = (name, value) => {
+        switch (name) {
+            case 'name':
+                if (!value.trim()) return 'Name is required';
+                if (value.trim().length < 2) return 'Name must be at least 2 characters';
+                return '';
+            case 'email':
+                if (!value.trim()) return 'Email is required';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return 'Please enter a valid email address';
+                return '';
+            case 'subject':
+                if (!value.trim()) return 'Subject is required';
+                if (value.trim().length < 3) return 'Subject must be at least 3 characters';
+                return '';
+            case 'message':
+                if (!value.trim()) return 'Message is required';
+                if (value.trim().length < 10) return 'Message must be at least 10 characters';
+                return '';
+            default:
+                return '';
+        }
+    };
+
+    // Validate entire form
+    const validateForm = () => {
+        const errors = {};
+        Object.keys(formData).forEach(field => {
+            const error = validateField(field, formData[field]);
+            if (error) errors[field] = error;
+        });
+        return errors;
+    };
+
+    // Handle input changes
     const handleChange = (e) => {
-        setFormData(prevData => ({
-            ...prevData,
-            [e.target.name]: e.target.value
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
         }));
-    }
+        
+        // Clear validation error for this field
+        if (validationErrors[name]) {
+            setValidationErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+        
+        // Clear general error state when user starts typing
+        if (error) {
+            setError(false);
+        }
+    };
 
+    // Handle field blur for real-time validation
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        const fieldError = validateField(name, value);
+        if (fieldError) {
+            setValidationErrors(prev => ({
+                ...prev,
+                [name]: fieldError
+            }));
+        }
+    };
 
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        // Validate form before submission
+        const errors = validateForm();
+        if (Object.keys(errors).length > 0) {
+            setValidationErrors(errors);
+            return;
+        }
+
+        setIsLoading(true);
+        setError(false);
+        setValidationErrors({});
+
+        try {
+            // Initialize EmailJS with your public key
+            emailjs.init(publicKey);
+
+            // Prepare template parameters
+            const templateParams = {
+                from_name: formData.name.trim(),
+                from_email: formData.email.trim(),
+                subject: formData.subject.trim(),
+                message: formData.message.trim(),
+                to_name: 'Alex Robaczewski'
+            };
+
+            // Send notification email to you
+            await emailjs.send(serviceId, notifyId, templateParams);
+
+            // Send auto-reply to the user
+            await emailjs.send(serviceId, autoreplyId, templateParams);
+
+            // Success - reset form and show success message
+            setIsSubmitted(true);
+            setFormData({
+                name: '',
+                email: '',
+                subject: '',
+                message: '',
+            });
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                setIsSubmitted(false);
+            }, 5000);
+
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            setError(true);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <section id="contact" className="py-16 lg:py-24">
@@ -113,7 +234,7 @@ const Contact = () => {
                     <div className="bg-gray-900 rounded-2xl p-8 border border-gray-700">
                         <h3 className="text-2xl font-bold text-white mb-6">Send Me a Message</h3>
                         
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Name Input */}
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -127,11 +248,21 @@ const Contact = () => {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-colors duration-200"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={isLoading}
+                                        className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            validationErrors.name 
+                                                ? 'border-red-500 focus:ring-red-400' 
+                                                : 'border-gray-600 focus:ring-teal-400'
+                                        }`}
                                         placeholder="Enter your full name"
-                                        required
                                     />
                                 </div>
+                                {validationErrors.name && (
+                                    <p className="mt-1 text-sm text-red-400">{validationErrors.name}</p>
+                                )}
                             </div>
 
                             {/* Email Input */}
@@ -147,11 +278,21 @@ const Contact = () => {
                                         type="email"
                                         id="email"
                                         name="email"
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-colors duration-200"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={isLoading}
+                                        className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            validationErrors.email 
+                                                ? 'border-red-500 focus:ring-red-400' 
+                                                : 'border-gray-600 focus:ring-teal-400'
+                                        }`}
                                         placeholder="Enter your email address"
-                                        required
                                     />
                                 </div>
+                                {validationErrors.email && (
+                                    <p className="mt-1 text-sm text-red-400">{validationErrors.email}</p>
+                                )}
                             </div>
 
                             {/* Subject Input */}
@@ -163,10 +304,20 @@ const Contact = () => {
                                     type="text"
                                     id="subject"
                                     name="subject"
-                                    className="block w-full px-3 py-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-colors duration-200"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    disabled={isLoading}
+                                    className={`block w-full px-3 py-3 border rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                        validationErrors.subject 
+                                            ? 'border-red-500 focus:ring-red-400' 
+                                            : 'border-gray-600 focus:ring-teal-400'
+                                    }`}
                                     placeholder="What's this about?"
-                                    required
                                 />
+                                {validationErrors.subject && (
+                                    <p className="mt-1 text-sm text-red-400">{validationErrors.subject}</p>
+                                )}
                             </div>
 
                             {/* Message Textarea */}
@@ -182,45 +333,77 @@ const Contact = () => {
                                         id="message"
                                         name="message"
                                         rows={6}
-                                        className="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-colors duration-200 resize-none"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={isLoading}
+                                        className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent transition-colors duration-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed ${
+                                            validationErrors.message 
+                                                ? 'border-red-500 focus:ring-red-400' 
+                                                : 'border-gray-600 focus:ring-teal-400'
+                                        }`}
                                         placeholder="Tell me about your project or just say hello..."
-                                        required
                                     ></textarea>
                                 </div>
+                                {validationErrors.message && (
+                                    <p className="mt-1 text-sm text-red-400">{validationErrors.message}</p>
+                                )}
                             </div>
 
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-400/25 group"
+                                disabled={isLoading}
+                                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-teal-400/25 group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
                             >
-                                <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                                Send Message
+                                {isLoading ? (
+                                    <>
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                        Sending...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                                        Send Message
+                                    </>
+                                )}
                             </button>
                         </form>
 
-                        {/* Optional: Form Status Messages */}
+                        {/* Form Status Messages */}
                         <div className="mt-6 space-y-3">
-                            {/* Success Message - Hidden by default */}
-                            <div className="hidden p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
-                                <p className="text-green-300 text-sm font-medium">
-                                    ✅ Message sent successfully! I'll get back to you soon.
-                                </p>
-                            </div>
+                            {/* Success Message */}
+                            {isSubmitted && (
+                                <div className="p-4 bg-green-900/20 border border-green-500/30 rounded-lg animate-fade-in">
+                                    <p className="text-green-300 text-sm font-medium">
+                                        ✅ Message sent successfully! I'll get back to you within 24-48 hours.
+                                    </p>
+                                </div>
+                            )}
 
-                            {/* Error Message - Hidden by default */}
-                            <div className="hidden p-4 bg-red-900/20 border border-red-500/30 rounded-lg">
-                                <p className="text-red-300 text-sm font-medium">
-                                    ❌ Something went wrong. Please try again or email me directly.
-                                </p>
-                            </div>
+                            {/* Error Message */}
+                            {error && (
+                                <div className="p-4 bg-red-900/20 border border-red-500/30 rounded-lg animate-fade-in">
+                                    <p className="text-red-300 text-sm font-medium">
+                                        ❌ Something went wrong. Please try again or{' '}
+                                        <a 
+                                            href="mailto:alexander.robaczewski@gmail.com" 
+                                            className="underline hover:text-red-200 transition-colors"
+                                        >
+                                            email me directly
+                                        </a>.
+                                    </p>
+                                </div>
+                            )}
 
-                            {/* Loading State - Hidden by default */}
-                            <div className="hidden p-4 bg-teal-900/20 border border-teal-500/30 rounded-lg">
-                                <p className="text-teal-300 text-sm font-medium">
-                                    📤 Sending your message...
-                                </p>
-                            </div>
+                            {/* Loading State */}
+                            {isLoading && (
+                                <div className="p-4 bg-teal-900/20 border border-teal-500/30 rounded-lg animate-fade-in">
+                                    <p className="text-teal-300 text-sm font-medium">
+                                        📤 Sending your message...
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
