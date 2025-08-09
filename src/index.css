@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-:root {
-  background-color: black;
+#c {
+  margin: 0;
 }
 
 /* Wave animation for the hand emoji */
@@ -49,16 +49,26 @@
     0 0 12px rgba(20, 184, 166, 0.5);
 }
 
+/* Simple teal dot cursor */
+* {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="%2314b8a6"><circle cx="8" cy="8" r="6"/></svg>'), auto;
+}
+
+a, button, [role="button"], input[type="submit"], input[type="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="%2314b8a6"><circle cx="10" cy="10" r="8"/></svg>'), pointer;
+}
+
 /* Firefox scrollbar with teal accent */
 html {
   scrollbar-width: thin;
   scrollbar-color: #14b8a6 rgba(20, 184, 166, 0.1);
 }
 
-/* Optional: Add a subtle glow to the scrollbar area */
-::-webkit-scrollbar-track:hover {
-  background: linear-gradient(to right, #000000 0%, #0f3535 50%, #000000 100%);
-  border-color: rgba(20, 184, 166, 0.3);
+/* More prominent version */
+::-webkit-scrollbar-track {
+  background: linear-gradient(to right, #000000 0%, rgba(20, 184, 166, 0.15) 50%, #000000 100%);
+  border: 2px solid rgba(20, 184, 166, 0.3);
+  border-radius: 8px;
 }
 
 /* Smooth scrolling for anchor links */
