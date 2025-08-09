@@ -51,12 +51,17 @@ const Skills = () => {
         { name: "React", icon: "⚛️" },         // Modern frontend framework - high demand
         { name: "JavaScript", icon: "🟨" },    // Core programming language - essential
         { name: "Tailwind CSS", icon: "🎨" },  // Modern CSS framework - trending
-        { name: "Node.js", icon: "🟢" },       // Backend JavaScript - full-stack capability
         { name: "Git & GitHub", icon: "🐙" },  // Version control - collaboration essential
         { name: "HTML5", icon: "🌐" },         // Web fundamentals - foundation
         { name: "CSS3", icon: "🎭" },          // Styling expertise - visual skills
         { name: "Three.js", icon: "🎮" },      // 3D graphics - advanced/creative
-        { name: "RESTful APIs", icon: "🔗" }   // Data integration - backend connection
+        { name: "RESTful APIs", icon: "🔗" },   // Data integration - backend connection
+        { name: "Netlify", icon: "🌐" },       // Web Deployment
+        { name: "Vercel", icon: "▲" },         // React deployment platform
+        { name: "Vite", icon: "⚡" },           // Modern build tool - shows you use cutting-edge tooling
+        { name: "npm", icon: "📦" },       // Package management - essential for team collaboration
+        { name: "VS Code", icon: "💻" }, 
+        { name: "Testing", icon: "✅" }
     ];
 
     return (
