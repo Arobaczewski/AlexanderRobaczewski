@@ -1,5 +1,4 @@
 import { Github, Linkedin, Instagram, Facebook, Download, Contact } from "lucide-react"
-import coding from '../Pictures/coding.jpg'
 
 const Hero = () => {
     return (
@@ -97,7 +96,7 @@ const Hero = () => {
                     <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl max-w-md w-full hover:shadow-teal-400/20 hover:shadow-2xl transition-shadow duration-300">
                             <img 
-                                src={coding} 
+                                src='/headshot.png'
                                 alt="Alex coding" 
                                 className="w-full h-auto object-cover"
                             />
