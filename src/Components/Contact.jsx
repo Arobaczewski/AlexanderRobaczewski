@@ -185,9 +185,9 @@ const Contact = () => {
                                         <Phone className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
-                                        <p className="text-gray-300 text-sm font-medium">Phone</p>
-                                        <a href="tel:+13123304288" className="text-white font-semibold hover:text-teal-300 transition-colors duration-200 drop-shadow-lg">
-                                            (312) 330-4288
+                                        <p className="text-gray-300 text-sm font-medium">Linkedin</p>
+                                        <a href="https://www.linkedin.com/in/alexander-robaczewski/" target="_blank" rel="noopener noreferrer"  className="text-white font-semibold hover:text-teal-300 transition-colors duration-200 drop-shadow-lg">
+                                            https://www.linkedin.com/in/alexander-robaczewski
                                         </a>
                                     </div>
                                 </div>
