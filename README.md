@@ -3,7 +3,7 @@
 > 🚀 **From tech sales to web development - turning 8+ years of customer-facing experience into code that makes a difference.**
 
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Portfolio-14b8a6?style=for-the-badge)](https://your-portfolio-url.com)
-[![GitHub](https://img.shields.io/badge/📂_Source_Code-GitHub-black?style=for-the-badge&logo=github)](https://github.com/Arobaczewski/portfolio)
+[![GitHub](https://img.shields.io/badge/📂_Source_Code-GitHub-black?style=for-the-badge&logo=github)](https://github.com/Arobaczewski/AlexanderRobaczewski)
 
 ---
 
@@ -78,21 +78,21 @@
 - **Problem**: Manual tip calculations taking 1+ hours daily
 - **Solution**: React-based calculator with presets and splitting options
 - **Result**: Reduced calculation time to 15 minutes, used daily by management
-- [🔗 Live Demo](https://ayrtips.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski)
+- [🔗 Live Demo](https://ayrtips.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski/React-Tip-Calculator)
 
 ### **🌤️ WeatherBeatz - API Integration**
 **Innovation**: Spotify playlists based on weather conditions
 - **Tech Stack**: JavaScript, Spotify API, OpenWeather API
 - **Features**: Geolocation detection, real-time weather data, dynamic UI
 - **Achievement**: Complex multi-API integration with seamless user experience
-- [🔗 Live Demo](https://weatherbeatz.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski)
+- [🔗 Live Demo](https://weatherbeatz.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski/WeatherBeats)
 
 ### **🛍️ Robo's Wishlist - Ecommerce Showcase**
 **Mastery**: Complete React ecosystem demonstration
 - **Architecture**: Context API, React Router, EmailJS integration
 - **Design**: Modern responsive design with Three.js animations
 - **Scope**: Full-featured ecommerce experience with cart management
-- [🔗 Live Demo](https://roboswishlist.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski)
+- [🔗 Live Demo](https://roboswishlist.netlify.app/) | [📂 Source Code](https://github.com/Arobaczewski/eCommerce)
 
 ---
 
