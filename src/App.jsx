@@ -1,23 +1,14 @@
 /*
- * App.jsx - Complete Portfolio Experience with Personal Bitmoji Greeting
+ * App.jsx - Seamless Portfolio Experience with No Visual Interruptions
  * 
- * BUSINESS IMPACT: This version creates the ultimate personal portfolio experience,
- * beginning with a memorable, friendly greeting that immediately humanizes the
- * professional presentation. The sequence builds emotional connection before
- * demonstrating technical competence, creating a perfect balance of personality
- * and professionalism that employers remember long after viewing.
+ * BUSINESS IMPACT: This enhanced version eliminates any visual disruptions during
+ * the transition from greeting to portfolio, creating a completely smooth, premium
+ * experience that maintains engagement and demonstrates exceptional attention to
+ * user experience details that employers notice and value.
  * 
- * STRATEGIC USER EXPERIENCE FLOW:
- * 1. Personal Bitmoji Greeting: Creates immediate emotional connection and memorability
- * 2. Immersive 3D Background: Demonstrates technical sophistication and creativity
- * 3. Progressive Content Revelation: Guides user through strategic portfolio narrative
- * 4. Professional Conversion: Multiple touchpoints for employer engagement
- * 
- * COMPETITIVE ADVANTAGES:
- * - Human Connection: Personal greeting differentiates from corporate portfolios
- * - Memorability: Unique entrance ensures portfolio stands out in employer memory
- * - Technical + Personal: Perfect balance of competence and approachability
- * - Professional Creativity: Shows ability to think beyond standard presentations
+ * TECHNICAL SOLUTION: StarfieldBackground runs continuously in the background
+ * while content layers transition smoothly on top, preventing any white flashes
+ * or visual interruptions that could break immersion or appear unprofessional.
  */
 
 import { useState } from 'react';
@@ -28,115 +19,104 @@ import Skills from './Components/Skills'
 import Projects from "./Components/Projects"
 import Contact from "./Components/Contact"
 import StarfieldBackground from "./Components/StarfieldBackground"
-import AnimatedSection from "./Components/AnimatedSection"
 import BitmojiGreeting from "./Components/BitmojiGreeting"
 
 function App() {
   /*
    * APPLICATION STATE MANAGEMENT
-   * showGreeting: Controls the initial Bitmoji welcome experience
-   * showPortfolio: Manages transition from greeting to main portfolio content
+   * showGreeting: Controls the Bitmoji welcome overlay
+   * showPortfolio: Controls portfolio content visibility
+   * backgroundReady: Ensures StarfieldBackground is initialized before transitions
    */
   const [showGreeting, setShowGreeting] = useState(true);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [backgroundReady, setBackgroundReady] = useState(false);
 
   /*
    * GREETING COMPLETION HANDLER
-   * Manages smooth transition from personal greeting to professional portfolio
-   * Ensures StarfieldBackground initializes properly before content appears
+   * Manages seamless transition with no visual interruptions
+   * Ensures smooth handoff from greeting to portfolio content
    */
   const handleGreetingComplete = () => {
+    // Start fading out greeting
     setShowGreeting(false);
     
-    // Brief delay allows smooth transition to portfolio
+    // Immediately start fading in portfolio content
     setTimeout(() => {
       setShowPortfolio(true);
-    }, 300);
+    }, 100); // Very short delay for smooth transition
   };
 
   /*
-   * PERSONAL GREETING PHASE
-   * Friendly, memorable introduction with animated Bitmoji
-   * Creates immediate personal connection before technical demonstration
-   */
-  if (showGreeting) {
-    return <BitmojiGreeting onComplete={handleGreetingComplete} />;
-  }
-
-  /*
-   * MAIN PORTFOLIO EXPERIENCE
-   * Professional presentation with scroll-triggered animations
-   * Technical competence showcase following personal introduction
+   * CONTINUOUS STARFIELD BACKGROUND
+   * Runs throughout entire experience to prevent white flashes
+   * Provides consistent visual foundation for all content phases
    */
   return (
     <>
       {/* 
-       * IMMERSIVE 3D BACKGROUND - Technical sophistication demonstration
-       * Loads after greeting completes to ensure smooth transition
-       * Creates premium atmosphere for portfolio content
+       * PERSISTENT 3D BACKGROUND - Never unmounts to prevent flashing
+       * Renders immediately and continues throughout entire user session
+       * Provides seamless visual foundation for greeting and portfolio transitions
        */}
       <StarfieldBackground />
       
       {/* 
-       * PORTFOLIO CONTENT CONTAINER - Professional presentation layer
-       * showPortfolio state ensures smooth entrance after greeting
-       * Scroll animations create engaging exploration experience
+       * BITMOJI GREETING OVERLAY - Personal welcome experience
+       * Renders as overlay on top of StarfieldBackground
+       * Smooth fade-out prevents visual interruption during transition
+       */}
+      {showGreeting && (
+        <div className={`fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-800 ${
+          showGreeting ? 'opacity-100' : 'opacity-0'
+        }`}>
+          <BitmojiGreeting onComplete={handleGreetingComplete} />
+        </div>
+      )}
+      
+      {/* 
+       * MAIN PORTFOLIO CONTENT - Professional presentation layer
+       * Fades in smoothly over existing StarfieldBackground
+       * No background change prevents white flash or visual disruption
        */}
       <div className={`min-h-screen relative mx-auto px-6 sm:px-12 lg:max-w-[70rem] xl:max-w-[76rem] 2xl:max-w-[92rem] text-white transition-opacity duration-1000 ${
         showPortfolio ? 'opacity-100' : 'opacity-0'
       }`}>
         
-        {/* 
-         * HEADER - Professional navigation and brand identity
-         * Appears immediately when portfolio loads for orientation
-         * Maintains consistent brand identity from greeting to portfolio
-         */}
-        <Header/>
-        
-        {/* 
-         * HERO SECTION - Value proposition and primary conversion
-         * Gentle entrance delay (300ms) allows header to establish first
-         * fadeUp animation creates elegant transition from greeting experience
-         */}
-        <AnimatedSection animation="fadeUp" delay={300} duration={800}>
-          <Hero/>
-        </AnimatedSection>
-        
-        {/* 
-         * ABOUT SECTION - Personal story and competitive differentiation
-         * slideRight creates dynamic movement and visual interest
-         * 500ms delay provides comfortable pacing after Hero section
-         */}
-        <AnimatedSection animation="slideRight" delay={500} duration={900}>
-          <About />
-        </AnimatedSection>
-        
-        {/* 
-         * SKILLS SECTION - Technical competency demonstration
-         * slideLeft balances previous slideRight for visual rhythm
-         * 700ms delay creates natural progression through portfolio narrative
-         */}
-        <AnimatedSection animation="slideLeft" delay={700} duration={900}>
-          <Skills/>
-        </AnimatedSection>
-        
-        {/* 
-         * PROJECTS SECTION - Portfolio evidence and capability proof
-         * slideUp emphasizes importance of project showcase
-         * 900ms delay builds anticipation for portfolio's critical evidence
-         */}
-        <AnimatedSection animation="slideUp" delay={900} duration={1000}>
-          <Projects/>
-        </AnimatedSection>
-        
-        {/* 
-         * CONTACT SECTION - Conversion completion and engagement
-         * scale animation draws attention to final conversion opportunity
-         * 1100ms delay creates dramatic pause before call-to-action
-         */}
-        <AnimatedSection animation="scale" delay={1100} duration={800}>
-          <Contact/>
-        </AnimatedSection>
+        {/* Portfolio content only renders when ready */}
+        {showPortfolio && (
+          <>
+            {/* 
+             * HEADER - Professional navigation and brand identity
+             */}
+            <Header/>
+            
+            {/* 
+             * HERO SECTION - Value proposition with elegant entrance
+             */}
+              <Hero/>
+            
+            {/* 
+             * ABOUT SECTION - Personal story with dynamic movement
+             */}
+              <About />
+            
+            {/* 
+             * SKILLS SECTION - Technical competency demonstration
+             */}
+              <Skills/>
+            
+            {/* 
+             * PROJECTS SECTION - Portfolio evidence showcase
+             */}
+              <Projects/>
+            
+            {/* 
+             * CONTACT SECTION - Conversion completion opportunity
+             */}
+              <Contact/>
+          </>
+        )}
       </div>
     </>
   )

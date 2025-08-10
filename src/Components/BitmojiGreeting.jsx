@@ -1,24 +1,14 @@
 /*
- * BitmojiGreeting.jsx - Personal Welcome Screen with Animated Bitmoji
+ * BitmojiGreeting.jsx - Personal Welcome Overlay Component
  * 
  * BUSINESS IMPACT: This greeting creates an immediate, memorable personal connection
- * that humanizes the portfolio and sets a friendly, approachable tone. The unique
- * personal touch differentiates the portfolio from corporate presentations while
- * demonstrating creativity and attention to user experience details.
+ * as an overlay on the existing StarfieldBackground. The seamless integration ensures
+ * no visual interruptions while maintaining the sophisticated 3D environment throughout
+ * the entire user experience from first greeting to portfolio exploration.
  * 
- * STRATEGIC ADVANTAGES:
- * - Personal Connection: Human face and greeting create immediate emotional bond
- * - Memorability: Unique entrance ensures portfolio stands out from competitors
- * - Personality Showcase: Demonstrates cultural fit and approachable personality
- * - Professional Friendliness: Balances competence with accessibility
- * - Conversation Starter: Memorable element likely to be mentioned in interviews
- * 
- * TECHNICAL ACHIEVEMENTS:
- * - Smooth animation sequencing with precise timing control
- * - Image preloading for seamless animation experience
- * - State management for complex animation phases
- * - Hardware-accelerated transforms for smooth performance
- * - Graceful transition to main portfolio content
+ * TECHNICAL INTEGRATION: Works as content overlay rather than separate screen,
+ * allowing the StarfieldBackground to run continuously and preventing any white
+ * flashes or visual disruptions during the transition to portfolio content.
  */
 
 import { useState, useEffect } from 'react';
@@ -49,7 +39,7 @@ const BitmojiGreeting = ({ onComplete }) => {
       const img = new Image();
       img.onload = () => setBitmojiLoaded(true);
       img.onerror = () => setBitmojiLoaded(true); // Continue even if image fails
-      img.src = '/bitmoji-wave.gif'; // Replace with your actual Bitmoji path
+      img.src = '/bitmoji-wave.png'; // Replace with your actual Bitmoji path
     };
 
     preloadBitmoji();
@@ -73,7 +63,7 @@ const BitmojiGreeting = ({ onComplete }) => {
 
       // Phase 3: Waving animation period
       setPhase('waving');
-      await new Promise(resolve => setTimeout(resolve, 2500)); // Duration of wave GIF
+      await new Promise(resolve => setTimeout(resolve, 2500)); // Duration of wave animation
 
       // Phase 4: Exit sequence
       setPhase('exiting');
@@ -116,170 +106,119 @@ const BitmojiGreeting = ({ onComplete }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className={`relative z-10 text-center transform transition-all duration-500 ease-out ${getPhaseClasses()}`}>
       
       {/* 
-       * ANIMATED BACKGROUND PARTICLES
-       * Subtle background animation creates depth and engagement
-       * Matches StarfieldBackground aesthetic for visual continuity
+       * GREETING TEXT SECTION
+       * Friendly, welcoming message that builds personal connection
+       * Appears before Bitmoji for proper introduction sequence
        */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-teal-400 rounded-full animate-pulse opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
+      <div className={`mb-8 transition-all duration-300 ${
+        phase === 'greeting' || phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}>
+        
+        {/* Main greeting */}
+        <h1 className="text-5xl md:text-6xl font-bold mb-4">
+          <span className="bg-gradient-to-r from-teal-300 to-teal-500 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+            Hi There! 👋
+          </span>
+        </h1>
+        
+        {/* Personal introduction */}
+        <p className="text-xl md:text-2xl text-gray-200 drop-shadow-md">
+          Welcome to my portfolio!
+        </p>
+        
+        {/* Subtitle that appears during waving */}
+        <div className={`mt-4 transition-all duration-300 ${
+          phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+        }`}>
+          <p className="text-lg text-gray-300 drop-shadow-md">
+            I'm Alex, and I'm excited to show you my work!
+          </p>
+        </div>
       </div>
 
       {/* 
-       * MAIN GREETING CONTAINER
-       * Centered content with smooth animation transitions
-       * Glassmorphism styling maintains design consistency
+       * BITMOJI CONTAINER
+       * Animated avatar that creates personal connection
+       * Scaling and rotation effects enhance the waving animation
        */}
-      <div className={`relative z-10 text-center transform transition-all duration-500 ease-out ${getPhaseClasses()}`}>
+      <div className={`relative transition-all duration-300 ${
+        phase === 'greeting' || phase === 'waving' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+      }`}>
+        
+        {/* Glowing background effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-full blur-2xl scale-150 opacity-50"></div>
         
         {/* 
-         * GREETING TEXT SECTION
-         * Friendly, welcoming message that builds personal connection
-         * Appears before Bitmoji for proper introduction sequence
+         * ANIMATED BITMOJI IMAGE
+         * Uses PNG with custom CSS animations to create waving effect
+         * Multiple animation layers create realistic waving motion
          */}
-        <div className={`mb-8 transition-all duration-300 ${
-          phase === 'greeting' || phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}>
-          
-          {/* Main greeting */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-teal-300 to-teal-500 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
-              Hi There! 👋
-            </span>
-          </h1>
-          
-          {/* Personal introduction */}
-          <p className="text-xl md:text-2xl text-gray-200 drop-shadow-md">
-            Welcome to my portfolio!
-          </p>
-          
-          {/* Subtitle that appears during waving */}
-          <div className={`mt-4 transition-all duration-300 ${
-            phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-          }`}>
-            <p className="text-lg text-gray-300 drop-shadow-md">
-              I'm Alex, and I'm excited to show you my work!
-            </p>
-          </div>
-        </div>
-
-        {/* 
-         * BITMOJI CONTAINER
-         * Animated avatar that creates personal connection
-         * Scaling and rotation effects enhance the waving animation
-         */}
-        <div className={`relative transition-all duration-300 ${
-          phase === 'greeting' || phase === 'waving' ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-        }`}>
-          
-          {/* Glowing background effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-full blur-2xl scale-150 opacity-50"></div>
-          
-          {/* 
-           * BITMOJI IMAGE
-           * Replace src with your actual Bitmoji waving GIF
-           * Strategic sizing and styling for optimal visual impact
-           */}
-          {bitmojiLoaded && (
-            <div className="relative">
-              <img
-                src="/bitmoji-wave.gif"
-                alt="Alex waving hello"
-                className={`w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full border-4 border-teal-400/30 shadow-2xl shadow-teal-400/20 transition-transform duration-300 ${
-                  phase === 'waving' ? 'scale-110 rotate-2' : 'scale-100 rotate-0'
-                }`}
-                style={{
-                  filter: 'drop-shadow(0 0 30px rgba(20, 184, 166, 0.3))'
-                }}
-              />
-              
-              {/* Pulse ring effect during waving */}
-              {phase === 'waving' && (
-                <div className="absolute inset-0 border-4 border-teal-400/40 rounded-full animate-ping"></div>
-              )}
-            </div>
-          )}
-
-          {/* Loading state while Bitmoji loads */}
-          {!bitmojiLoaded && (
-            <div className="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full bg-gradient-to-br from-teal-400/20 to-teal-600/20 border-4 border-teal-400/30 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-2 border-teal-400 border-t-transparent"></div>
-            </div>
-          )}
-        </div>
-
-        {/* 
-         * PROGRESS INDICATOR
-         * Subtle dots showing animation progress
-         * Provides visual feedback during greeting sequence
-         */}
-        <div className={`mt-8 flex justify-center space-x-2 transition-all duration-300 ${
-          phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-        }`}>
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="w-2 h-2 bg-teal-400 rounded-full animate-bounce opacity-60"
+        {bitmojiLoaded && (
+          <div className="relative">
+            <img
+              src="/bitmoji-wave.png"
+              alt="Alex waving hello"
+              className={`w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full border-4 border-teal-400/30 shadow-2xl shadow-teal-400/20 transition-all duration-300 ${
+                phase === 'waving' 
+                  ? 'scale-110 animate-wave-gentle animate-bounce-subtle' 
+                  : 'scale-100'
+              }`}
               style={{
-                animationDelay: `${i * 0.2}s`,
-                animationDuration: '1s'
+                filter: 'drop-shadow(0 0 30px rgba(20, 184, 166, 0.3))',
+                animationDuration: phase === 'waving' ? '0.6s' : '0s',
+                animationIterationCount: phase === 'waving' ? '4' : '0',
+                transformOrigin: 'center bottom'
               }}
             />
-          ))}
-        </div>
+            
+            {/* Pulse ring effect during waving */}
+            {phase === 'waving' && (
+              <div className="absolute inset-0 border-4 border-teal-400/40 rounded-full animate-ping"></div>
+            )}
+            
+            {/* Additional sparkle effects during waving */}
+            {phase === 'waving' && (
+              <>
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-teal-400 rounded-full animate-bounce opacity-70" style={{ animationDelay: '0.2s' }}></div>
+                <div className="absolute -top-4 left-8 w-2 h-2 bg-teal-300 rounded-full animate-bounce opacity-60" style={{ animationDelay: '0.4s' }}></div>
+                <div className="absolute -right-4 top-8 w-3 h-3 bg-teal-500 rounded-full animate-bounce opacity-50" style={{ animationDelay: '0.6s' }}></div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Loading state while Bitmoji loads */}
+        {!bitmojiLoaded && (
+          <div className="w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full bg-gradient-to-br from-teal-400/20 to-teal-600/20 border-4 border-teal-400/30 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-teal-400 border-t-transparent"></div>
+          </div>
+        )}
+      </div>
+
+      {/* 
+       * PROGRESS INDICATOR
+       * Subtle dots showing animation progress
+       * Provides visual feedback during greeting sequence
+       */}
+      <div className={`mt-8 flex justify-center space-x-2 transition-all duration-300 ${
+        phase === 'waving' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      }`}>
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="w-2 h-2 bg-teal-400 rounded-full animate-bounce opacity-60"
+            style={{
+              animationDelay: `${i * 0.2}s`,
+              animationDuration: '1s'
+            }}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
 export default BitmojiGreeting;
-
-/*
- * USAGE INTEGRATION:
- * 
- * function App() {
- *   const [showGreeting, setShowGreeting] = useState(true);
- * 
- *   if (showGreeting) {
- *     return <BitmojiGreeting onComplete={() => setShowGreeting(false)} />;
- *   }
- * 
- *   return (
- *     // Your main portfolio content with scroll animations
- *   );
- * }
- * 
- * BITMOJI SETUP INSTRUCTIONS:
- * 1. Open Snapchat and go to your Bitmoji
- * 2. Find a waving animation or create one
- * 3. Save/export as GIF
- * 4. Add to your public folder as 'bitmoji-wave.gif'
- * 5. Update the src path in the component
- * 
- * CUSTOMIZATION OPTIONS:
- * - Adjust timing in animationSequence for longer/shorter greeting
- * - Change greeting text to match your personality
- * - Modify colors to match your brand
- * - Add sound effects for extra engagement
- * - Include multiple Bitmoji expressions for variety
- * 
- * BUSINESS IMPACT:
- * - Creates immediate personal connection and memorable first impression
- * - Demonstrates personality and cultural fit for team environments
- * - Shows creativity and attention to user experience details
- * - Differentiates portfolio from standard, corporate presentations
- * - Provides natural conversation starter for interviews
- */
