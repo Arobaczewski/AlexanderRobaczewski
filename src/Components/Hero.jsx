@@ -243,7 +243,7 @@ const Hero = () => {
                              * PROGRESSIVE ENHANCEMENT: gap-2 to gap-3 creates subtle animation feedback
                              */}
                             <a 
-                                href="/Alexander_Robaczewski_Resume.docx" 
+                                href="/Alexander_Robaczewski_Resume.pdf" 
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-600 hover:to-teal-400 hover:shadow-2xl hover:shadow-teal-400/40 rounded-full text-white font-semibold uppercase tracking-wider text-sm gap-2 hover:gap-3 transition-all duration-300 group shadow-lg"
