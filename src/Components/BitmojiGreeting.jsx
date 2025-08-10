@@ -120,7 +120,7 @@ const BitmojiGreeting = ({ onComplete }) => {
         {/* Main greeting */}
         <h1 className="text-5xl md:text-6xl font-bold mb-4">
           <span className="bg-gradient-to-r from-teal-300 to-teal-500 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
-            Hi There! 👋
+            Hi There!
           </span>
         </h1>
         
