@@ -257,7 +257,7 @@ const About = () => {
                                      */}
                                     <li className="flex items-center hover:text-teal-200 transition-colors duration-200 text-gray-200 drop-shadow-md">
                                         <CheckCircle className="w-4 h-4 text-teal-400 mr-2" />
-                                        Three.js (Learning)
+                                        Three.js
                                     </li>
                                 </ul>
                             </div>
@@ -278,11 +278,11 @@ const About = () => {
                                 <ul className="space-y-2">
                                     <li className="flex items-center hover:text-teal-200 transition-colors duration-200 text-gray-200 drop-shadow-md">
                                         <CheckCircle className="w-4 h-4 text-teal-400 mr-2" />
-                                        Node.js & Express
+                                        C# with ASP.NET
                                     </li>
                                     <li className="flex items-center hover:text-teal-200 transition-colors duration-200 text-gray-200 drop-shadow-md">
                                         <CheckCircle className="w-4 h-4 text-teal-400 mr-2" />
-                                        PostgreSQL
+                                        MSSQL
                                     </li>
                                     <li className="flex items-center hover:text-teal-200 transition-colors duration-200 text-gray-200 drop-shadow-md">
                                         <CheckCircle className="w-4 h-4 text-teal-400 mr-2" />
