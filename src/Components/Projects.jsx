@@ -47,7 +47,7 @@ const ProjectsTimeline = () => {
             id: 1,
             title: "Tip Calculator",
             subtitle: "Business Solution",
-            date: "May 2025 (2 Weeks)",
+            date: "May 2025",
             type: "Utility App",
             /*
              * BUSINESS VALUE EMPHASIS - Real workplace implementation
@@ -78,7 +78,7 @@ const ProjectsTimeline = () => {
             id: 2,
             title: "WeatherBeatz",
             subtitle: "API Integration Project", 
-            date: "June 2025 (3 Weeks)",
+            date: "June 2025",
             type: "Web Application",
             /*
              * API INTEGRATION EXPERTISE - Complex third-party service orchestration
@@ -109,7 +109,7 @@ const ProjectsTimeline = () => {
             id: 3,
             title: "Robo's Wishlist",
             subtitle: "Ecommerce Showcase",
-            date: "July 2025 (4 Weeks)", 
+            date: "July 2025", 
             type: "Ecommerce Site",
             /*
              * COMPREHENSIVE REACT MASTERY - Advanced framework utilization
