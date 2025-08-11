@@ -290,7 +290,7 @@ const About = () => {
                                     </li>
                                     <li className="flex items-center hover:text-teal-200 transition-colors duration-200 text-gray-200 drop-shadow-md">
                                         <CheckCircle className="w-4 h-4 text-teal-400 mr-2" />
-                                        Full-Stack Architecture
+                                        TypeScript
                                     </li>
                                 </ul>
                             </div>
