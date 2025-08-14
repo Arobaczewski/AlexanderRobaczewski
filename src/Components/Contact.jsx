@@ -12,12 +12,15 @@
  * - Accessible form design following WCAG guidelines
  * - Progressive enhancement with loading states and feedback
  * - Responsive design that works across all device types
+ * - Dual EmailJS integration (notification + auto-reply system)
  * 
  * EMPLOYER VALUE DEMONSTRATION:
  * - Form validation shows attention to data quality and user experience
  * - State management proves understanding of complex React patterns
  * - Error handling demonstrates defensive programming practices
  * - Accessibility features show awareness of inclusive design principles
+ * - Email automation shows understanding of business process automation
+ * - Debugging capabilities demonstrate professional troubleshooting skills
  */
 
 import { Mail, Phone, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
@@ -28,6 +31,7 @@ const Contact = () => {
      * EMAILJS INITIALIZATION - Service setup and configuration
      * ENVIRONMENT VALIDATION: Ensures required environment variables are present
      * ONE-TIME SETUP: Initializes EmailJS with public key on component mount
+     * SECURITY: Dynamic import prevents unnecessary bundle loading
      */
     useEffect(() => {
         /*
@@ -35,6 +39,7 @@ const Contact = () => {
          * PUBLIC KEY: Authenticates requests to EmailJS service
          * ERROR HANDLING: Graceful fallback if environment variables missing
          * SECURITY: Uses environment variables to protect sensitive keys
+         * DYNAMIC LOADING: Improves initial page load performance
          */
         const initializeEmailJS = async () => {
             const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -192,17 +197,23 @@ const Contact = () => {
     };
 
     /*
-     * FORM SUBMISSION HANDLER - Production-ready form processing
+     * FORM SUBMISSION HANDLER - Production-ready dual email system
      * SECURITY: Client-side validation prevents malicious submissions
      * USER EXPERIENCE: Loading states and feedback provide clear system status
      * ERROR HANDLING: Comprehensive error management with fallback options
+     * BUSINESS AUTOMATION: Dual email system (notification + auto-reply)
+     * 
+     * DUAL EMAIL STRATEGY:
+     * 1. Notification Email: Alerts portfolio owner of new contact
+     * 2. Auto-Reply Email: Confirms receipt to user and sets expectations
      * 
      * BUSINESS LOGIC FLOW:
      * 1. Validate all fields before submission
      * 2. Set loading state to prevent double submissions  
-     * 3. Simulate API call (easily replaceable with real endpoint)
-     * 4. Handle success/error states with appropriate user feedback
-     * 5. Auto-reset form and messages for optimal user flow
+     * 3. Send notification email to portfolio owner
+     * 4. Send auto-reply confirmation to user
+     * 5. Handle success/error states with appropriate user feedback
+     * 6. Auto-reset form and messages for optimal user flow
      */
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -211,6 +222,7 @@ const Contact = () => {
          * PRE-SUBMISSION VALIDATION - Data quality assurance
          * EARLY RETURN: Prevents unnecessary API calls with invalid data
          * COST OPTIMIZATION: Reduces server load and processing costs
+         * USER FEEDBACK: Shows validation errors immediately
          */
         const errors = validateForm();
         if (Object.keys(errors).length > 0) {
@@ -218,33 +230,27 @@ const Contact = () => {
             return;
         }
 
-        // Initialize submission state
+        // Initialize submission state - prevents double submissions
         setIsLoading(true);
         setError(false);
         setValidationErrors({});
 
         try {
             /*
-             * EMAILJS INTEGRATION - Production email service implementation
-             * DUAL TEMPLATE STRATEGY: Sends both notification and auto-reply emails
-             * 
-             * BUSINESS LOGIC:
-             * 1. Send notification email to portfolio owner (you)
-             * 2. Send auto-reply confirmation to the user
-             * 3. Both emails use the same form data but different templates
-             * 
-             * ENVIRONMENT VARIABLES:
-             * - VITE_SERVICE_ID: EmailJS service configuration
-             * - VITE_NOTIFY_TEMPLATE_ID: Template for notification email to you
-             * - VITE_AUTOREPLY_TEMPLATE_ID: Template for confirmation email to user
-             * - VITE_EMAILJS_PUBLIC_KEY: Public key for EmailJS authentication
+             * DYNAMIC EMAILJS IMPORT - Performance optimization
+             * LAZY LOADING: Only loads EmailJS when needed for submission
+             * BUNDLE SIZE: Reduces initial JavaScript bundle size
+             * RELIABILITY: Ensures EmailJS is available when needed
              */
-
-            // Import EmailJS dynamically to ensure it's available
             const emailjsModule = await import('@emailjs/browser');
             const emailjs = emailjsModule.default;
 
-            // Validate environment variables exist
+            /*
+             * ENVIRONMENT VALIDATION - Configuration security
+             * EARLY DETECTION: Identifies missing configuration before API calls
+             * SECURITY: Validates all required credentials are present
+             * DEBUGGING: Clear error messaging for configuration issues
+             */
             const serviceId = import.meta.env.VITE_SERVICE_ID;
             const notifyTemplateId = import.meta.env.VITE_NOTIFY_TEMPLATE_ID;
             const autoReplyTemplateId = import.meta.env.VITE_AUTOREPLY_TEMPLATE_ID;
@@ -255,59 +261,117 @@ const Contact = () => {
             }
 
             /*
-             * NOTIFICATION EMAIL - Alert portfolio owner of new contact
-             * PURPOSE: Immediately notifies you when someone contacts you
-             * TEMPLATE VARIABLES: Should include user's name, email, subject, message
-             * PRIORITY: Primary email for business follow-up
+             * NOTIFICATION EMAIL - Primary business communication
+             * PURPOSE: Immediately alerts portfolio owner of new contact inquiry
+             * BUSINESS VALUE: Enables rapid response to potential opportunities
+             * DATA STRUCTURE: Includes all user-provided information for context
+             * 
+             * TEMPLATE VARIABLES:
+             * - from_name: User's full name for personalization
+             * - from_email: User's email for direct reply capability
+             * - subject: Inquiry topic for prioritization
+             * - message: Full inquiry content for context
+             * - to_name: Portfolio owner name for template personalization
+             * - reply_to: Enables one-click reply to user
              */
             const notificationResult = await emailjs.send(
-                serviceId,                  // EmailJS service ID
-                notifyTemplateId,           // Notification template
+                serviceId,              // EmailJS service configuration
+                notifyTemplateId,       // Notification email template
                 {
-                    // Template variables for notification email
-                    from_name: formData.name,               // User's name
-                    from_email: formData.email,             // User's email for reply
-                    subject: formData.subject,              // Message subject
-                    message: formData.message,              // Full message content
-                    to_name: "Alex Robaczewski",            // Your name (recipient)
-                    reply_to: formData.email                // Enable direct reply to user
+                    // User information for notification
+                    from_name: formData.name,               // Sender identification
+                    from_email: formData.email,             // Reply-to address
+                    subject: formData.subject,              // Inquiry categorization
+                    message: formData.message,              // Full inquiry content
+                    to_name: "Alex Robaczewski",            // Recipient name
+                    reply_to: formData.email                // Enable direct reply
                 },
-                publicKey                   // Authentication key
+                publicKey              // Authentication credential
             );
 
+            // Success logging for debugging and monitoring
+            console.log('Notification email sent successfully:', notificationResult.status);
+
             /*
-             * AUTO-REPLY EMAIL - Professional confirmation to user
+             * AUTO-REPLY EMAIL - Professional user experience enhancement
              * PURPOSE: Confirms receipt and sets response expectations
-             * TEMPLATE VARIABLES: Should include user's name and professional auto-reply message
-             * BUSINESS VALUE: Professional touch that builds trust and manages expectations
+             * BUSINESS VALUE: Professional touch that builds trust and credibility
+             * USER PSYCHOLOGY: Immediate confirmation reduces anxiety about message delivery
+             * 
+             * FIXED IMPLEMENTATION NOTES:
+             * - Variable names must exactly match EmailJS template configuration
+             * - Common template variations handled with multiple field options
+             * - Robust error handling for template configuration mismatches
+             * 
+             * TEMPLATE VARIABLES (Multiple naming conventions supported):
+             * - to_email/email/recipient_email: User's email (template recipient)
+             * - to_name/name/user_name: User's name for personalization
+             * - from_name: Portfolio owner name (email sender)
+             * - reply_subject: Professional subject line formatting
+             * - original_subject: Reference to user's inquiry topic
+             * - original_message: User's message for confirmation context
              */
             const autoReplyResult = await emailjs.send(
-                serviceId,                  // Same service ID
-                autoReplyTemplateId,        // Auto-reply template
+                serviceId,              // Same EmailJS service
+                autoReplyTemplateId,    // Auto-reply template configuration
                 {
-                    // Template variables for auto-reply email
-                    to_name: formData.name,                    // User's name (personalization)
-                    to_email: formData.email,                  // User's email (recipient)
-                    from_name: "Alex Robaczewski",             // Your name (sender)
-                    subject: `Re: ${formData.subject}`,        // Reply subject
-                    original_message: formData.message         // Reference original message
+                    /*
+                     * PRIMARY TEMPLATE VARIABLES - Standard naming convention
+                     * These should work with most EmailJS template configurations
+                     */
+                    to_email: formData.email,               // CRITICAL: Template recipient field
+                    to_name: formData.name,                 // User personalization
+                    from_name: "Alex Robaczewski",          // Professional sender identification
+                    
+                    /*
+                     * ALTERNATIVE TEMPLATE VARIABLES - Fallback naming conventions
+                     * Provides compatibility with different template configurations
+                     * Include multiple variations to handle template inconsistencies
+                     */
+                    email: formData.email,                  // Alternative recipient field name
+                    name: formData.name,                    // Alternative name field
+                    user_name: formData.name,               // Common template variation
+                    user_email: formData.email,             // Common template variation
+                    recipient_email: formData.email,        // Another template variation
+                    recipient_name: formData.name,          // Another template variation
+                    
+                    /*
+                     * CONTENT VARIABLES - Message context and formatting
+                     * Provides professional auto-reply content structure
+                     */
+                    reply_subject: `Re: ${formData.subject}`,           // Professional reply format
+                    original_subject: formData.subject,                 // Reference original topic
+                    original_message: formData.message,                 // Confirmation content
+                    
+                    /*
+                     * BUSINESS CONTEXT - Professional communication elements
+                     * Enhances credibility and sets proper expectations
+                     */
+                    response_timeframe: "24-48 hours",                  // Clear expectation setting
+                    contact_method: "email",                            // Preferred communication channel
                 },
-                publicKey                   // Authentication key
+                publicKey              // Authentication credential
             );
 
-            /*
-             * SUCCESS VALIDATION - Ensure both emails sent successfully
-             * ERROR HANDLING: Checks that both notification and auto-reply completed
-             * LOGGING: Console logs for debugging (remove in production)
-             */
-            console.log('Notification email sent:', notificationResult.status);
-            console.log('Auto-reply email sent:', autoReplyResult.status);
+            // Success logging with detailed status information
+            console.log('Auto-reply email sent successfully:', autoReplyResult.status);
 
             /*
-             * SUCCESS STATE MANAGEMENT - Positive user experience
-             * FORM RESET: Clears data for potential additional submissions
-             * FEEDBACK: Clear success message builds user confidence
+             * ENHANCED SUCCESS FEEDBACK - Comprehensive user notification
+             * CONFIRMATION: Both emails sent successfully
+             * EXPECTATION SETTING: Clear timeline for response
+             * PROFESSIONAL TOUCH: Builds confidence in communication process
+             */
+            console.log('Dual email system completed successfully:');
+            console.log(`- Notification to Alex: ${notificationResult.status}`);
+            console.log(`- Auto-reply to ${formData.name}: ${autoReplyResult.status}`);
+
+            /*
+             * SUCCESS STATE MANAGEMENT - Optimal user experience flow
+             * FORM RESET: Clears all data for potential additional submissions
+             * SUCCESS FEEDBACK: Clear confirmation message builds user confidence
              * AUTO-DISMISS: 5-second timeout prevents message accumulation
+             * STATE CLEANUP: Ensures clean state for next interaction
              */
             setIsSubmitted(true);
             setFormData({
@@ -317,25 +381,61 @@ const Contact = () => {
                 message: '',
             });
 
-            // Auto-hide success message after 5 seconds
+            // Auto-hide success message to prevent UI clutter
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 5000);
 
         } catch (error) {
             /*
-             * ERROR HANDLING - Graceful failure management
-             * LOGGING: Console error for debugging (production would use proper logging)
-             * USER FEEDBACK: Clear error message with alternative contact method
-             * RECOVERY: Maintains form data so user doesn't lose their message
+             * COMPREHENSIVE ERROR HANDLING - Professional debugging and user experience
+             * LOGGING: Detailed error information for debugging
+             * USER FEEDBACK: Clear, actionable error messages
+             * BUSINESS CONTINUITY: Maintains form data so users don't lose work
+             * FALLBACK OPTIONS: Provides alternative contact methods
              */
-            console.error('Form Error:', error);
+            console.error('Form Submission Error Details:', error);
+            
+            /*
+             * SPECIFIC ERROR HANDLING - Targeted debugging assistance
+             * 422 STATUS: Unprocessable Entity - typically template configuration issues
+             * DEBUGGING INFO: Specific guidance for common EmailJS problems
+             * DEVELOPER EXPERIENCE: Clear error categorization for faster fixes
+             */
+            if (error.status === 422) {
+                console.error('EmailJS 422 Error - Template Configuration Issue:');
+                console.error('- Check that template variable names match code variables');
+                console.error('- Verify recipient email field is configured correctly');
+                console.error('- Ensure all required template fields are provided');
+                console.error('Error details:', error.text);
+            } else if (error.status === 400) {
+                console.error('EmailJS 400 Error - Bad Request:');
+                console.error('- Check service ID and template IDs are correct');
+                console.error('- Verify public key is valid and active');
+                console.error('Error details:', error.text);
+            } else if (error.status === 401) {
+                console.error('EmailJS 401 Error - Unauthorized:');
+                console.error('- Check public key configuration');
+                console.error('- Verify EmailJS account is active');
+                console.error('Error details:', error.text);
+            } else {
+                console.error('Unexpected error occurred:', error);
+            }
+            
+            /*
+             * USER-FACING ERROR STATE - Graceful degradation
+             * MAINTAINS FORM DATA: User doesn't lose their message
+             * ALTERNATIVE OPTIONS: Provides backup contact method
+             * PROFESSIONAL HANDLING: Error doesn't break user experience
+             */
             setError(true);
+            
         } finally {
             /*
-             * CLEANUP - Ensures consistent state regardless of outcome
+             * GUARANTEED CLEANUP - Ensures consistent state regardless of outcome
              * LOADING STATE: Always cleared to re-enable form submission
              * RELIABILITY: Prevents form from getting stuck in loading state
+             * USER EXPERIENCE: Form remains functional even after errors
              */
             setIsLoading(false);
         }
@@ -510,10 +610,11 @@ const Contact = () => {
                     </div>
 
                     {/* 
-                     * CONTACT FORM - Primary conversion mechanism
+                     * CONTACT FORM - Primary conversion mechanism with enhanced email system
                      * STRATEGIC POSITIONING: Equal visual weight to contact info encourages form usage
                      * PROFESSIONAL DESIGN: Matches overall portfolio aesthetic for consistency
                      * ACCESSIBILITY: Proper labels, error handling, and keyboard navigation
+                     * BUSINESS AUTOMATION: Dual email system demonstrates process automation skills
                      */}
                     <div className="relative group">
                         {/* Enhanced glow effect matching other sections */}
@@ -523,10 +624,11 @@ const Contact = () => {
                             <h3 className="text-2xl font-bold text-white mb-6 drop-shadow-lg">Send Me a Message</h3>
                             
                             {/* 
-                             * FORM ELEMENT - Production-ready form handling
+                             * FORM ELEMENT - Production-ready form handling with dual email system
                              * ACCESSIBILITY: onSubmit handler enables Enter key submission
                              * VALIDATION: Client-side validation prevents invalid submissions
                              * UX: space-y-6 provides comfortable field spacing
+                             * BUSINESS LOGIC: Automated notification and auto-reply system
                              */}
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* 
@@ -584,6 +686,7 @@ const Contact = () => {
                                  * EMAIL INPUT FIELD - Contact method validation
                                  * INPUT TYPE: "email" provides browser-level validation support
                                  * CRITICAL FIELD: Email validation ensures response capability
+                                 * AUTO-REPLY DEPENDENCY: User's email used for confirmation message
                                  */}
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-md">
@@ -618,6 +721,7 @@ const Contact = () => {
                                  * SUBJECT INPUT FIELD - Message categorization
                                  * BUSINESS VALUE: Helps prioritize and route incoming messages
                                  * UX: Clear placeholder guides user input
+                                 * AUTO-REPLY INTEGRATION: Subject used in confirmation email
                                  */}
                                 <div>
                                     <label htmlFor="subject" className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-md">
@@ -648,6 +752,7 @@ const Contact = () => {
                                  * SIZING: 6 rows provides adequate space for detailed messages
                                  * RESIZE CONTROL: resize-none prevents layout disruption
                                  * VALIDATION: Minimum length ensures meaningful inquiries
+                                 * EMAIL CONTEXT: Message content included in both email types
                                  */}
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-200 mb-2 drop-shadow-md">
@@ -679,11 +784,12 @@ const Contact = () => {
                                 </div>
 
                                 {/* 
-                                 * SUBMIT BUTTON - Form submission with enhanced UX
+                                 * SUBMIT BUTTON - Enhanced form submission with dual email feedback
                                  * LOADING STATE: Prevents double submissions and provides feedback
                                  * VISUAL HIERARCHY: Gradient styling makes button prominent
                                  * ACCESSIBILITY: Disabled state provides clear unavailable indication
                                  * ANIMATION: Icon movement on hover encourages interaction
+                                 * BUSINESS PROCESS: Triggers both notification and auto-reply emails
                                  */}
                                 <button
                                     type="submit"
@@ -692,20 +798,22 @@ const Contact = () => {
                                 >
                                     {isLoading ? (
                                         /* 
-                                         * LOADING STATE - Clear progress indication
+                                         * LOADING STATE - Enhanced progress indication
                                          * VISUAL FEEDBACK: Spinner animation shows active processing
                                          * TEXT CHANGE: "Sending..." communicates current action
                                          * UX PSYCHOLOGY: Reduces perceived wait time through feedback
+                                         * DUAL PROCESS: Indicates both emails being sent
                                          */
                                         <>
                                             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                            Sending...
+                                            Sending Messages...
                                         </>
                                     ) : (
                                         /* 
                                          * DEFAULT STATE - Call to action with visual enhancement
                                          * ICON ANIMATION: Translate effect on hover encourages interaction
                                          * CLEAR LABELING: "Send Message" removes ambiguity about button function
+                                         * EXPECTATION SETTING: User knows they'll receive confirmation
                                          */
                                         <>
                                             <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -716,36 +824,40 @@ const Contact = () => {
                             </form>
 
                             {/* 
-                             * FORM STATUS MESSAGES - Comprehensive user feedback system
+                             * ENHANCED FORM STATUS MESSAGES - Comprehensive user feedback system
                              * STATE MANAGEMENT: Different messages for success, error, and loading states
                              * AUTO-DISMISS: Success message automatically clears to prevent clutter
                              * FALLBACK OPTIONS: Error state provides alternative contact method
+                             * DUAL EMAIL FEEDBACK: Reflects both notification and auto-reply success
                              */}
                             <div className="mt-6 space-y-3">
                                 {/* 
-                                 * SUCCESS MESSAGE - Positive reinforcement and expectation setting
+                                 * SUCCESS MESSAGE - Enhanced positive reinforcement
+                                 * DUAL CONFIRMATION: Acknowledges both emails sent successfully
                                  * REASSURANCE: Confirms successful submission to reduce user anxiety
                                  * TIMELINE: Sets clear expectation for response time (24-48 hours)
                                  * VISUAL DESIGN: Green color scheme reinforces positive outcome
+                                 * USER EXPERIENCE: Mentions auto-reply so user knows to check email
                                  */}
                                 {isSubmitted && (
                                     <div className="p-4 backdrop-blur-md bg-green-500/20 border border-green-400/30 rounded-lg animate-fade-in shadow-lg">
                                         <p className="text-green-200 text-sm font-medium drop-shadow-md">
-                                            ✅ Message sent successfully! I'll get back to you within 24-48 hours.
+                                            ✅ Message sent successfully! You should receive a confirmation email shortly, and I'll get back to you within 24-48 hours.
                                         </p>
                                     </div>
                                 )}
 
                                 {/* 
-                                 * ERROR MESSAGE - Graceful failure handling with alternatives
+                                 * ERROR MESSAGE - Enhanced graceful failure handling
                                  * PROBLEM ACKNOWLEDGMENT: Honest about technical issues
                                  * ALTERNATIVE SOLUTION: Direct email link provides backup contact method
                                  * USER EMPOWERMENT: Doesn't leave user stranded with failed form
+                                 * DEBUGGING INFO: More helpful for troubleshooting
                                  */}
                                 {error && (
                                     <div className="p-4 backdrop-blur-md bg-red-500/20 border border-red-400/30 rounded-lg animate-fade-in shadow-lg">
                                         <p className="text-red-200 text-sm font-medium drop-shadow-md">
-                                            ❌ Something went wrong. Please try again or{' '}
+                                            ⚠️ Something went wrong with the message system. Please try again or{' '}
                                             <a 
                                                 href="mailto:alexander.robaczewski@gmail.com" 
                                                 className="underline hover:text-red-100 transition-colors"
@@ -757,15 +869,16 @@ const Contact = () => {
                                 )}
 
                                 {/* 
-                                 * LOADING MESSAGE - Process transparency
+                                 * LOADING MESSAGE - Enhanced process transparency
                                  * IMMEDIATE FEEDBACK: Appears as soon as submission starts
                                  * PROGRESS INDICATION: Shows form is actively processing
                                  * BRAND CONSISTENCY: Teal color matches overall design theme
+                                 * DUAL PROCESS: Indicates both emails being processed
                                  */}
                                 {isLoading && (
                                     <div className="p-4 backdrop-blur-md bg-teal-500/20 border border-teal-400/30 rounded-lg animate-fade-in shadow-lg">
                                         <p className="text-teal-200 text-sm font-medium drop-shadow-md">
-                                            📤 Sending your message...
+                                            📤 Sending your message and confirmation email...
                                         </p>
                                     </div>
                                 )}
@@ -779,6 +892,7 @@ const Contact = () => {
                  * REDUNDANCY STRATEGY: Provides alternative contact method for users who prefer direct email
                  * URGENCY CREATION: "Ready to Start Something Great?" creates immediate engagement opportunity
                  * AVAILABILITY SIGNAL: "currently available" indicates immediate capacity for new work
+                 * PROFESSIONAL AUTOMATION: References the dual email system capabilities
                  */}
                 <div className="text-center mt-16">
                     <div className="relative group">
@@ -793,20 +907,23 @@ const Contact = () => {
                                 Ready to Start Something Great?
                             </h4>
                             {/* 
-                             * AVAILABILITY AND VALUE PROPOSITION
+                             * ENHANCED AVAILABILITY AND VALUE PROPOSITION
                              * IMMEDIATE AVAILABILITY: Reduces friction for potential clients
                              * COLLABORATIVE LANGUAGE: "work together" emphasizes partnership
                              * VISION FOCUS: "bring your vision to life" appeals to client goals
+                             * PROCESS TRANSPARENCY: Mentions professional communication system
                              */}
                             <p className="text-teal-100 mb-6 max-w-2xl mx-auto drop-shadow-md">
                                 I'm currently available for new opportunities and exciting projects. 
-                                Let's discuss how we can work together to bring your vision to life.
+                                Let's discuss how we can work together to bring your vision to life. 
+                                You'll receive immediate confirmation when you reach out!
                             </p>
                             {/* 
                              * DIRECT EMAIL CTA - Immediate action opportunity
                              * BYPASS FORM: Some users prefer direct email over forms
                              * VISUAL PROMINENCE: Button styling makes action clear and appealing
                              * ICON USAGE: Mail icon reinforces the email action
+                             * EXPECTATION SETTING: Users know they'll get quick response
                              */}
                             <a 
                                 href="mailto:alexander.robaczewski@gmail.com"
@@ -828,5 +945,6 @@ const Contact = () => {
  * ES6 STANDARD: Default export follows modern JavaScript practices
  * REUSABILITY: Component can be easily imported and used in different contexts
  * TESTING: Clean export structure facilitates unit testing
+ * EMPLOYER DEMONSTRATION: Shows understanding of proper module organization
  */
 export default Contact
