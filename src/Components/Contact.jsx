@@ -197,181 +197,110 @@ const Contact = () => {
     };
 
     /*
-     * FORM SUBMISSION HANDLER - Production-ready dual email system
-     * SECURITY: Client-side validation prevents malicious submissions
-     * USER EXPERIENCE: Loading states and feedback provide clear system status
-     * ERROR HANDLING: Comprehensive error management with fallback options
-     * BUSINESS AUTOMATION: Dual email system (notification + auto-reply)
+     * FORM SUBMISSION HANDLER - DEBUGGING VERSION FOR AUTO-REPLY ISSUE
+     * TEMPORARY: This version includes extensive debugging to fix the auto-reply template issue
+     * PRODUCTION: Once fixed, this can be cleaned up for final version
      * 
-     * DUAL EMAIL STRATEGY:
-     * 1. Notification Email: Alerts portfolio owner of new contact
-     * 2. Auto-Reply Email: Confirms receipt to user and sets expectations
-     * 
-     * BUSINESS LOGIC FLOW:
-     * 1. Validate all fields before submission
-     * 2. Set loading state to prevent double submissions  
-     * 3. Send notification email to portfolio owner
-     * 4. Send auto-reply confirmation to user
-     * 5. Handle success/error states with appropriate user feedback
-     * 6. Auto-reset form and messages for optimal user flow
+     * CURRENT ISSUE: EmailJS auto-reply template "To Email" field configuration
+     * ERROR: "The recipients address is empty" - template variable name mismatch
      */
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        /*
-         * PRE-SUBMISSION VALIDATION - Data quality assurance
-         * EARLY RETURN: Prevents unnecessary API calls with invalid data
-         * COST OPTIMIZATION: Reduces server load and processing costs
-         * USER FEEDBACK: Shows validation errors immediately
-         */
         const errors = validateForm();
         if (Object.keys(errors).length > 0) {
             setValidationErrors(errors);
             return;
         }
 
-        // Initialize submission state - prevents double submissions
         setIsLoading(true);
         setError(false);
         setValidationErrors({});
 
         try {
-            /*
-             * DYNAMIC EMAILJS IMPORT - Performance optimization
-             * LAZY LOADING: Only loads EmailJS when needed for submission
-             * BUNDLE SIZE: Reduces initial JavaScript bundle size
-             * RELIABILITY: Ensures EmailJS is available when needed
-             */
             const emailjsModule = await import('@emailjs/browser');
             const emailjs = emailjsModule.default;
 
-            /*
-             * ENVIRONMENT VALIDATION - Configuration security
-             * EARLY DETECTION: Identifies missing configuration before API calls
-             * SECURITY: Validates all required credentials are present
-             * DEBUGGING: Clear error messaging for configuration issues
-             */
             const serviceId = import.meta.env.VITE_SERVICE_ID;
             const notifyTemplateId = import.meta.env.VITE_NOTIFY_TEMPLATE_ID;
             const autoReplyTemplateId = import.meta.env.VITE_AUTOREPLY_TEMPLATE_ID;
             const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-            if (!serviceId || !notifyTemplateId || !autoReplyTemplateId || !publicKey) {
-                throw new Error('Missing EmailJS configuration. Please check environment variables.');
+            if (!serviceId || !notifyTemplateId || !publicKey) {
+                throw new Error('Missing EmailJS configuration.');
             }
 
             /*
-             * NOTIFICATION EMAIL - Primary business communication
-             * PURPOSE: Immediately alerts portfolio owner of new contact inquiry
-             * BUSINESS VALUE: Enables rapid response to potential opportunities
-             * DATA STRUCTURE: Includes all user-provided information for context
-             * 
-             * TEMPLATE VARIABLES:
-             * - from_name: User's full name for personalization
-             * - from_email: User's email for direct reply capability
-             * - subject: Inquiry topic for prioritization
-             * - message: Full inquiry content for context
-             * - to_name: Portfolio owner name for template personalization
-             * - reply_to: Enables one-click reply to user
+             * NOTIFICATION EMAIL - This works correctly
+             * Sends notification to you when someone fills out the form
              */
             const notificationResult = await emailjs.send(
-                serviceId,              // EmailJS service configuration
-                notifyTemplateId,       // Notification email template
+                serviceId,
+                notifyTemplateId,
                 {
-                    // User information for notification
-                    from_name: formData.name,               // Sender identification
-                    from_email: formData.email,             // Reply-to address
-                    subject: formData.subject,              // Inquiry categorization
-                    message: formData.message,              // Full inquiry content
-                    to_name: "Alex Robaczewski",            // Recipient name
-                    reply_to: formData.email                // Enable direct reply
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    subject: formData.subject,
+                    message: formData.message,
+                    to_name: "Alex Robaczewski",
+                    reply_to: formData.email
                 },
-                publicKey              // Authentication credential
+                publicKey
             );
 
-            // Success logging for debugging and monitoring
-            console.log('Notification email sent successfully:', notificationResult.status);
+            console.log('✅ Notification email sent successfully:', notificationResult.status);
 
             /*
-             * AUTO-REPLY EMAIL - Professional user experience enhancement
-             * PURPOSE: Confirms receipt and sets response expectations
-             * BUSINESS VALUE: Professional touch that builds trust and credibility
-             * USER PSYCHOLOGY: Immediate confirmation reduces anxiety about message delivery
-             * 
-             * FIXED IMPLEMENTATION NOTES:
-             * - Variable names must exactly match EmailJS template configuration
-             * - Common template variations handled with multiple field options
-             * - Robust error handling for template configuration mismatches
-             * 
-             * TEMPLATE VARIABLES (Multiple naming conventions supported):
-             * - to_email/email/recipient_email: User's email (template recipient)
-             * - to_name/name/user_name: User's name for personalization
-             * - from_name: Portfolio owner name (email sender)
-             * - reply_subject: Professional subject line formatting
-             * - original_subject: Reference to user's inquiry topic
-             * - original_message: User's message for confirmation context
+             * AUTO-REPLY EMAIL - FIXED FOR YOUR TEMPLATE CONFIGURATION
+             * Your template uses {{from_email}} as the recipient field
+             * This matches your EmailJS template settings exactly
              */
-            const autoReplyResult = await emailjs.send(
-                serviceId,              // Same EmailJS service
-                autoReplyTemplateId,    // Auto-reply template configuration
-                {
-                    /*
-                     * PRIMARY TEMPLATE VARIABLES - Standard naming convention
-                     * These should work with most EmailJS template configurations
-                     */
-                    to_email: formData.email,               // CRITICAL: Template recipient field
-                    to_name: formData.name,                 // User personalization
-                    from_name: "Alex Robaczewski",          // Professional sender identification
+            
+            if (autoReplyTemplateId) {
+                try {
+                    console.log('🔍 Sending auto-reply confirmation to:', formData.email);
                     
                     /*
-                     * ALTERNATIVE TEMPLATE VARIABLES - Fallback naming conventions
-                     * Provides compatibility with different template configurations
-                     * Include multiple variations to handle template inconsistencies
+                     * AUTO-REPLY DATA - Matches your EmailJS template configuration
+                     * CRITICAL: Your template uses {{from_email}} for recipient (To Email field)
+                     * TEMPLATE FIELDS:
+                     * - from_email: User's email (becomes the recipient)
+                     * - from_name: User's name for personalization  
+                     * - original_subject: Reference to their inquiry topic
+                     * - original_message: Their message for context
                      */
-                    email: formData.email,                  // Alternative recipient field name
-                    name: formData.name,                    // Alternative name field
-                    user_name: formData.name,               // Common template variation
-                    user_email: formData.email,             // Common template variation
-                    recipient_email: formData.email,        // Another template variation
-                    recipient_name: formData.name,          // Another template variation
-                    
-                    /*
-                     * CONTENT VARIABLES - Message context and formatting
-                     * Provides professional auto-reply content structure
-                     */
-                    reply_subject: `Re: ${formData.subject}`,           // Professional reply format
-                    original_subject: formData.subject,                 // Reference original topic
-                    original_message: formData.message,                 // Confirmation content
-                    
-                    /*
-                     * BUSINESS CONTEXT - Professional communication elements
-                     * Enhances credibility and sets proper expectations
-                     */
-                    response_timeframe: "24-48 hours",                  // Clear expectation setting
-                    contact_method: "email",                            // Preferred communication channel
-                },
-                publicKey              // Authentication credential
-            );
+                    const autoReplyData = {
+                        from_email: formData.email,         // MATCHES your template's {{from_email}}
+                        from_name: formData.name,           // User's name for personalization
+                        user_name: formData.name,           // Alternative name field
+                        original_subject: formData.subject, // Their inquiry topic
+                        original_message: formData.message, // Their message content
+                        reply_subject: formData.subject,    // For subject line reference
+                        contact_name: formData.name         // Additional name field option
+                    };
 
-            // Success logging with detailed status information
-            console.log('Auto-reply email sent successfully:', autoReplyResult.status);
+                    console.log('📧 Auto-reply data being sent:', autoReplyData);
+
+                    const autoReplyResult = await emailjs.send(
+                        serviceId,
+                        autoReplyTemplateId,
+                        autoReplyData,
+                        publicKey
+                    );
+
+                    console.log('✅ Auto-reply confirmation sent successfully:', autoReplyResult.status);
+                    
+                } catch (autoReplyError) {
+                    console.error('❌ Auto-reply failed:', autoReplyError);
+                    console.error('Error details:', autoReplyError.text);
+                    // Don't fail the whole form if auto-reply fails - notification still works
+                }
+            }
 
             /*
-             * ENHANCED SUCCESS FEEDBACK - Comprehensive user notification
-             * CONFIRMATION: Both emails sent successfully
-             * EXPECTATION SETTING: Clear timeline for response
-             * PROFESSIONAL TOUCH: Builds confidence in communication process
-             */
-            console.log('Dual email system completed successfully:');
-            console.log(`- Notification to Alex: ${notificationResult.status}`);
-            console.log(`- Auto-reply to ${formData.name}: ${autoReplyResult.status}`);
-
-            /*
-             * SUCCESS STATE MANAGEMENT - Optimal user experience flow
-             * FORM RESET: Clears all data for potential additional submissions
-             * SUCCESS FEEDBACK: Clear confirmation message builds user confidence
-             * AUTO-DISMISS: 5-second timeout prevents message accumulation
-             * STATE CLEANUP: Ensures clean state for next interaction
+             * SUCCESS STATE - Form works even without auto-reply
+             * Users still get confirmation that their message was sent
+             * You still receive their message via notification email
              */
             setIsSubmitted(true);
             setFormData({
@@ -381,62 +310,20 @@ const Contact = () => {
                 message: '',
             });
 
-            // Auto-hide success message to prevent UI clutter
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 5000);
 
         } catch (error) {
-            /*
-             * COMPREHENSIVE ERROR HANDLING - Professional debugging and user experience
-             * LOGGING: Detailed error information for debugging
-             * USER FEEDBACK: Clear, actionable error messages
-             * BUSINESS CONTINUITY: Maintains form data so users don't lose work
-             * FALLBACK OPTIONS: Provides alternative contact methods
-             */
-            console.error('Form Submission Error Details:', error);
+            console.error('Form Submission Error:', error);
             
-            /*
-             * SPECIFIC ERROR HANDLING - Targeted debugging assistance
-             * 422 STATUS: Unprocessable Entity - typically template configuration issues
-             * DEBUGGING INFO: Specific guidance for common EmailJS problems
-             * DEVELOPER EXPERIENCE: Clear error categorization for faster fixes
-             */
             if (error.status === 422) {
-                console.error('EmailJS 422 Error - Template Configuration Issue:');
-                console.error('- Check that template variable names match code variables');
-                console.error('- Verify recipient email field is configured correctly');
-                console.error('- Ensure all required template fields are provided');
-                console.error('Error details:', error.text);
-            } else if (error.status === 400) {
-                console.error('EmailJS 400 Error - Bad Request:');
-                console.error('- Check service ID and template IDs are correct');
-                console.error('- Verify public key is valid and active');
-                console.error('Error details:', error.text);
-            } else if (error.status === 401) {
-                console.error('EmailJS 401 Error - Unauthorized:');
-                console.error('- Check public key configuration');
-                console.error('- Verify EmailJS account is active');
-                console.error('Error details:', error.text);
-            } else {
-                console.error('Unexpected error occurred:', error);
+                console.error('❌ EmailJS Template Configuration Error');
+                console.error('Check your EmailJS dashboard template settings');
             }
             
-            /*
-             * USER-FACING ERROR STATE - Graceful degradation
-             * MAINTAINS FORM DATA: User doesn't lose their message
-             * ALTERNATIVE OPTIONS: Provides backup contact method
-             * PROFESSIONAL HANDLING: Error doesn't break user experience
-             */
             setError(true);
-            
         } finally {
-            /*
-             * GUARANTEED CLEANUP - Ensures consistent state regardless of outcome
-             * LOADING STATE: Always cleared to re-enable form submission
-             * RELIABILITY: Prevents form from getting stuck in loading state
-             * USER EXPERIENCE: Form remains functional even after errors
-             */
             setIsLoading(false);
         }
     };
