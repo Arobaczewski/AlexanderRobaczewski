@@ -20,10 +20,44 @@
  * - Accessibility features show awareness of inclusive design principles
  */
 
-import { Mail, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
-import { useState } from "react"
+import { Mail, Phone, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
+import { useState, useEffect } from "react"
 
 const Contact = () => {
+    /*
+     * EMAILJS INITIALIZATION - Service setup and configuration
+     * ENVIRONMENT VALIDATION: Ensures required environment variables are present
+     * ONE-TIME SETUP: Initializes EmailJS with public key on component mount
+     */
+    useEffect(() => {
+        /*
+         * EMAILJS SERVICE INITIALIZATION
+         * PUBLIC KEY: Authenticates requests to EmailJS service
+         * ERROR HANDLING: Graceful fallback if environment variables missing
+         * SECURITY: Uses environment variables to protect sensitive keys
+         */
+        const initializeEmailJS = async () => {
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+            
+            if (publicKey) {
+                try {
+                    // Import EmailJS dynamically to ensure it's loaded
+                    const emailjsModule = await import('@emailjs/browser');
+                    
+                    // Initialize EmailJS with public key
+                    emailjsModule.default.init(publicKey);
+                    console.log('EmailJS initialized successfully');
+                } catch (error) {
+                    console.error('Failed to initialize EmailJS:', error);
+                }
+            } else {
+                console.error('EmailJS public key not found in environment variables');
+            }
+        };
+
+        initializeEmailJS();
+    }, []);
+
     /*
      * STATE MANAGEMENT STRATEGY - Comprehensive form state handling
      * BUSINESS LOGIC: Multiple state variables enable sophisticated user experience
@@ -191,15 +225,84 @@ const Contact = () => {
 
         try {
             /*
-             * API INTEGRATION PLACEHOLDER - Production-ready architecture
-             * CURRENT: Simulated delay for demonstration purposes
-             * PRODUCTION: Replace with actual EmailJS or backend API call
+             * EMAILJS INTEGRATION - Production email service implementation
+             * DUAL TEMPLATE STRATEGY: Sends both notification and auto-reply emails
              * 
-             * EXAMPLE PRODUCTION IMPLEMENTATION:
-             * await emailjs.send(serviceID, templateID, formData, publicKey);
+             * BUSINESS LOGIC:
+             * 1. Send notification email to portfolio owner (you)
+             * 2. Send auto-reply confirmation to the user
+             * 3. Both emails use the same form data but different templates
+             * 
+             * ENVIRONMENT VARIABLES:
+             * - VITE_SERVICE_ID: EmailJS service configuration
+             * - VITE_NOTIFY_TEMPLATE_ID: Template for notification email to you
+             * - VITE_AUTOREPLY_TEMPLATE_ID: Template for confirmation email to user
+             * - VITE_EMAILJS_PUBLIC_KEY: Public key for EmailJS authentication
              */
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
+
+            // Import EmailJS dynamically to ensure it's available
+            const emailjsModule = await import('@emailjs/browser');
+            const emailjs = emailjsModule.default;
+
+            // Validate environment variables exist
+            const serviceId = import.meta.env.VITE_SERVICE_ID;
+            const notifyTemplateId = import.meta.env.VITE_NOTIFY_TEMPLATE_ID;
+            const autoReplyTemplateId = import.meta.env.VITE_AUTOREPLY_TEMPLATE_ID;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+            if (!serviceId || !notifyTemplateId || !autoReplyTemplateId || !publicKey) {
+                throw new Error('Missing EmailJS configuration. Please check environment variables.');
+            }
+
+            /*
+             * NOTIFICATION EMAIL - Alert portfolio owner of new contact
+             * PURPOSE: Immediately notifies you when someone contacts you
+             * TEMPLATE VARIABLES: Should include user's name, email, subject, message
+             * PRIORITY: Primary email for business follow-up
+             */
+            const notificationResult = await emailjs.send(
+                serviceId,                  // EmailJS service ID
+                notifyTemplateId,           // Notification template
+                {
+                    // Template variables for notification email
+                    from_name: formData.name,               // User's name
+                    from_email: formData.email,             // User's email for reply
+                    subject: formData.subject,              // Message subject
+                    message: formData.message,              // Full message content
+                    to_name: "Alex Robaczewski",            // Your name (recipient)
+                    reply_to: formData.email                // Enable direct reply to user
+                },
+                publicKey                   // Authentication key
+            );
+
+            /*
+             * AUTO-REPLY EMAIL - Professional confirmation to user
+             * PURPOSE: Confirms receipt and sets response expectations
+             * TEMPLATE VARIABLES: Should include user's name and professional auto-reply message
+             * BUSINESS VALUE: Professional touch that builds trust and manages expectations
+             */
+            const autoReplyResult = await emailjs.send(
+                serviceId,                  // Same service ID
+                autoReplyTemplateId,        // Auto-reply template
+                {
+                    // Template variables for auto-reply email
+                    to_name: formData.name,                    // User's name (personalization)
+                    to_email: formData.email,                  // User's email (recipient)
+                    from_name: "Alex Robaczewski",             // Your name (sender)
+                    subject: `Re: ${formData.subject}`,        // Reply subject
+                    original_message: formData.message         // Reference original message
+                },
+                publicKey                   // Authentication key
+            );
+
+            /*
+             * SUCCESS VALIDATION - Ensure both emails sent successfully
+             * ERROR HANDLING: Checks that both notification and auto-reply completed
+             * LOGGING: Console logs for debugging (remove in production)
+             */
+            console.log('Notification email sent:', notificationResult.status);
+            console.log('Auto-reply email sent:', autoReplyResult.status);
+
             /*
              * SUCCESS STATE MANAGEMENT - Positive user experience
              * FORM RESET: Clears data for potential additional submissions
@@ -330,7 +433,7 @@ const Contact = () => {
                                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 <div className="relative flex items-center gap-4 p-4 backdrop-blur-md bg-white/5 rounded-xl border border-white/10 hover:border-teal-400/50 transition-all duration-300 shadow-lg">
                                     <div className="w-12 h-12 bg-gradient-to-r from-teal-400 to-teal-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                        <Linkedin className="w-6 h-6 text-white" />
+                                        <Phone className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
                                         <p className="text-gray-300 text-sm font-medium">Linkedin</p>
