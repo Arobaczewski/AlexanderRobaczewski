@@ -259,24 +259,6 @@ const ProjectsTimeline = () => {
         }
     };
 
-    /*
-     * CATEGORY COLOR CODING SYSTEM - Visual differentiation and brand reinforcement
-     * PSYCHOLOGY: Different colors create mental associations with project types
-     * VISUAL HIERARCHY: Color coding enables quick project type identification
-     * BRAND CONSISTENCY: Maintains professional color palette throughout
-     * UPDATED COLORS: Added purple for full-stack to distinguish from frontend eCommerce
-     */
-    const getCategoryColor = (category) => {
-        switch(category) {
-            case 'business': return 'from-teal-400 to-teal-600';       // Green = money/business value
-            case 'api': return 'from-teal-400 to-teal-600';             // Blue = technical/data
-            case 'ecommerce': return 'from-teal-400 to-teal-600';         // Teal = brand/frontend focus
-            case 'portfolio': return 'from-teal-400 to-teal-600';         // Teal = personal brand consistency
-            case 'fullstack': return 'from-teal-400 to-teal-600';       // Purple = advanced/full-stack
-            default: return 'from-gray-500 to-gray-600';                  // Gray = neutral/default
-        }
-    };
-
     return (
         <section id="projects" className="py-16 lg:py-24 relative">
             {/* 
@@ -424,7 +406,7 @@ const ProjectsTimeline = () => {
                                                      * IMMEDIATE RECOGNITION: Icon enables quick project categorization
                                                      * VISUAL IMPACT: Gradient backgrounds add depth and sophistication
                                                      */}
-                                                    <div className={`p-2 rounded-lg bg-gradient-to-r ${getCategoryColor(project.category)} shadow-lg`}>
+                                                    <div className={`p-2 rounded-lg bg-gradient-to-r from-teal-400 to-teal-600 shadow-lg`}>
                                                         {getCategoryIcon(project.category)}
                                                     </div>
                                                     <div>
