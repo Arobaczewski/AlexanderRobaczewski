@@ -49,13 +49,14 @@ const ProjectsTimeline = () => {
             subtitle: "Business Solution",
             date: "May 2025",
             type: "Utility App",
+            img: "/tip-calculator.png",
             /*
              * BUSINESS VALUE EMPHASIS - Real workplace implementation
              * QUANTIFIED IMPACT: "45+ minutes saved daily" provides concrete ROI measurement
              * ADOPTION PROOF: "Used daily by management team" shows practical value and user acceptance
              * PROBLEM-SOLUTION FIT: Addresses actual business pain point with technical solution
              */
-            description: "A React-based tip calculator that revolutionized daily operations at my workplace, reducing calculation time from over an hour to just 15 minutes. Used daily by management team.",
+            description: "React app actively used in a retail environment to simplify tip-out calculations. Reduced daily management task time from 1 hour to 15 minutes.",
             impact: "45+ minutes saved daily",
             /*
              * TECHNICAL STACK DOCUMENTATION - Demonstrates core React competencies
@@ -70,7 +71,7 @@ const ProjectsTimeline = () => {
                 "Mobile responsive"         // Cross-platform accessibility
             ],
             liveUrl: "https://ayrtips.netlify.app/",
-            githubUrl: "https://github.com/Arobaczewski",
+            githubUrl: "https://github.com/Arobaczewski/React-Tip-Calculator",
             status: "Production",           // Live business application
             category: "business"            // Business value categorization
         },
@@ -80,20 +81,21 @@ const ProjectsTimeline = () => {
             subtitle: "API Integration Project", 
             date: "June 2025",
             type: "Web Application",
+            img: "/weatherbeats.png",
             /*
              * API INTEGRATION EXPERTISE - Complex third-party service orchestration
              * INNOVATION: Novel concept combining weather data with music recommendations
              * TECHNICAL COMPLEXITY: Multiple API coordination (geolocation, weather, Spotify)
              * USER EXPERIENCE: Dynamic UI adaptation based on external data
              */
-            description: "An innovative app that recommends Spotify playlists based on current weather conditions using geolocation and real-time weather data.",
+            description: "Generates music playlists based on live weather conditions using geolocation + API data. Demonstrates asynchronous data handling and multi-API integration.",
             impact: "Complex API Integration",
             /*
              * DIVERSE TECHNOLOGY STACK - API integration and external service management
              * THIRD-PARTY APIS: Spotify API, OpenWeather API show external service integration
              * VANILLA TECHNOLOGIES: JavaScript, CSS, HTML prove fundamental web skills
              */
-            techStack: ["JavaScript", "Spotify API", "OpenWeather API", "CSS", "HTML"],
+            techStack: ["JavaScript", "Spotify API", "OpenWeather API", "Geolocation API", "CSS", "HTML"],
             features: [
                 "Geolocation detection",           // Browser API utilization
                 "Real-time weather data",         // External API data fetching
@@ -101,7 +103,7 @@ const ProjectsTimeline = () => {
                 "Dynamic UI based on weather"     // Responsive UI based on data
             ],
             liveUrl: "https://weatherbeatz.netlify.app/",
-            githubUrl: "https://github.com/Arobaczewski",
+            githubUrl: "https://github.com/Arobaczewski/WeatherBeats",
             status: "Live",                       // Deployed and functional
             category: "api"                       // API integration focus
         },
@@ -111,13 +113,14 @@ const ProjectsTimeline = () => {
             subtitle: "Ecommerce Showcase",
             date: "July 2025", 
             type: "Ecommerce Site",
+            img: "/robos-wishlist.png",
             /*
              * COMPREHENSIVE REACT MASTERY - Advanced framework utilization
              * PROFESSIONAL DEVELOPMENT: "from scratch" shows ability to architect complete solutions
              * DESIGN SKILLS: "modern design principles" demonstrates UI/UX competence
              * BEST PRACTICES: "professional development practices" indicates code quality awareness
              */
-            description: "A comprehensive portfolio website built from scratch showcasing advanced React concepts, modern design principles, and professional development practices.",
+            description: "Built an online storefront with dynamic filtering, persistent cart, and search functionality. Includes a checkout flow and EmailJS for mock purchase confirmations.",
             impact: "Complete React Mastery",
             /*
              * ADVANCED TECHNOLOGY STACK - Modern React ecosystem expertise
@@ -126,7 +129,7 @@ const ProjectsTimeline = () => {
              * INTEGRATION: EmailJS shows form handling and email service integration
              * ANIMATION: Three.js indicates 3D graphics and advanced visual capabilities
              */
-            techStack: ["React", "Tailwind CSS", "Context API", "EmailJS", "Three.js"],
+            techStack: ["React", "Tailwind CSS", "Context API", "EmailJS", "Netlify"],
             features: [
                 "Dynamic routing",           // SPA navigation architecture
                 "Global state management",   // Complex application state handling
@@ -135,9 +138,79 @@ const ProjectsTimeline = () => {
                 "Interactive animations"    // Enhanced user experience
             ],
             liveUrl: "https://roboswishlist.netlify.app/", 
+            githubUrl: "https://github.com/Arobaczewski/eCommerce",
+            status: "Live",              // Active development project
+            category: "ecommerce"           // Ecommerce/showcase categorization
+        },
+        {
+            id: 4,
+            title: "Portfolio Website",
+            subtitle: "Personal Brand",
+            date: "August 2025", 
+            type: "Portfolio Site",
+            img: "/alex-robo.png",
+            /*
+             * COMPREHENSIVE REACT MASTERY - Advanced framework utilization
+             * PROFESSIONAL DEVELOPMENT: "from scratch" shows ability to architect complete solutions
+             * DESIGN SKILLS: "modern design principles" demonstrates UI/UX competence
+             * BEST PRACTICES: "professional development practices" indicates code quality awareness
+             */
+            description: "Custom React-based portfolio featuring a 3D animated background, responsive layout, and dynamic marquee elements. Deployed with Vercel on a custom GoDaddy domain.",
+            impact: "Personal Brand Development",
+            /*
+             * ADVANCED TECHNOLOGY STACK - Modern React ecosystem expertise
+             * STYLING: Tailwind CSS shows utility-first CSS methodology
+             * STATE MANAGEMENT: Context API demonstrates global state architecture
+             * INTEGRATION: EmailJS shows form handling and email service integration
+             * ANIMATION: Three.js indicates 3D graphics and advanced visual capabilities
+             */
+            techStack: ["React", "Tailwind CSS", "Three.js", "EmailJS", "Vercel"],
+            features: [
+                "Global state management",   // Complex application state handling
+                "Email integration",        // Third-party service integration
+                "Responsive design",        // Cross-device compatibility
+                "Interactive animations"    // Enhanced user experience
+            ],
+            liveUrl: "https://alexrobo.dev/", 
+            githubUrl: "https://github.com/Arobaczewski/AlexanderRobaczewski",
+            status: "Live",              // Active development project
+            category: "portfolio"           // Ecommerce/showcase categorization
+        },
+        {
+            id: 4,
+            title: "Robo's Wishlist Pt 2",
+            subtitle: "Ecommerce Showcase",
+            date: "EST October 2025", 
+            type: "Ecommerce Site",
+            img: "/comingsoon.png",
+            /*
+             * COMPREHENSIVE REACT MASTERY - Advanced framework utilization
+             * PROFESSIONAL DEVELOPMENT: "from scratch" shows ability to architect complete solutions
+             * DESIGN SKILLS: "modern design principles" demonstrates UI/UX competence
+             * BEST PRACTICES: "professional development practices" indicates code quality awareness
+             */
+            description: "Full-stack e-commerce wishlist application built with Next.js, TypeScript, and TailwindCSS on the frontend, with a C#/.NET backend and MSSQL database, featuring authentication, cart management, Stripe test checkout, and cloud deployment via Vercel and Azure.",
+            impact: "Full-Stack Showcase",
+            /*
+             * ADVANCED TECHNOLOGY STACK - Modern React ecosystem expertise
+             * STYLING: Tailwind CSS shows utility-first CSS methodology
+             * STATE MANAGEMENT: Context API demonstrates global state architecture
+             * INTEGRATION: EmailJS shows form handling and email service integration
+             * ANIMATION: Three.js indicates 3D graphics and advanced visual capabilities
+             */
+            techStack: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion", "Zustand", "Redux", "Stripe", "MSSQL", "Prisma", ".Net", "Azure"],
+            features: [
+                "User Authentication",   // Complex application state handling
+                "Checkout Flow",        // Third-party service integration
+                "Responsive Design",        // Cross-device compatibility
+                "Back End Integration",
+                "Cart Management",
+                "Cloud Deployment"    // Enhanced user experience
+            ],
+            liveUrl: "https://alexrobo.dev/", 
             githubUrl: "https://github.com/Arobaczewski",
-            status: "Current",              // Active development project
-            category: "portfolio"           // Portfolio/showcase categorization
+            status: "In Progress",              // Active development project
+            category: "ecommerce"           // Ecommerce/showcase categorization
         }
     ];
 
@@ -151,7 +224,8 @@ const ProjectsTimeline = () => {
         switch(category) {
             case 'business': return <Award className="w-5 h-5" />;      // Business value emphasis
             case 'api': return <Code className="w-5 h-5" />;           // Technical complexity
-            case 'portfolio': return <Users className="w-5 h-5" />;    // Showcase/demonstration
+            case 'ecommerce': return <Users className="w-5 h-5" />;    // Showcase/demonstration
+            case 'portfolio': return <Users className="w-5 h-5" />;
             default: return <Code className="w-5 h-5" />;              // Default technical icon
         }
     };
@@ -166,7 +240,8 @@ const ProjectsTimeline = () => {
         switch(category) {
             case 'business': return 'from-green-500 to-emerald-600';    // Green = money/business value
             case 'api': return 'from-blue-500 to-indigo-600';          // Blue = technical/data
-            case 'portfolio': return 'from-teal-400 to-teal-600';      // Teal = brand/personal
+            case 'ecommerce': return 'from-teal-400 to-teal-600';      // Teal = brand/personal
+            case 'portfolio': return 'from-teal-400 to-teal-600';
             default: return 'from-gray-500 to-gray-600';               // Gray = neutral/default
         }
     };
@@ -344,6 +419,12 @@ const ProjectsTimeline = () => {
                                                     {project.status}
                                                 </div>
                                             </div>
+                                        </div>
+                                         <div className="mb-4 rounded-lg overflow-hidden">
+                                            <img
+                                                className="w-full p-2 rounded-2xl h-48 object-cover"
+                                                src={project.img}
+                                            />
                                         </div>
 
                                         {/* 

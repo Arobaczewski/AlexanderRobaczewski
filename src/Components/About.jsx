@@ -103,6 +103,12 @@ const About = () => {
                                      * EMOTIONAL CONNECTION: Personal revelation moment creates memorable impact
                                      * PASSION INDICATOR: Shows genuine excitement, not just career convenience
                                      */}
+                                     <p className="drop-shadow-md">
+                                        I specialize in React, Next.js, TypeScript, and Tailwind CSS, and I’m currently 
+                                        expanding into full-stack development with C#, ASP.NET, and MSSQL. 
+                                        My projects range from a business-used tip calculator that cut task time by 
+                                        75% to a weather-based playlist app integrating Spotify and OpenWeather APIs.
+                                     </p>
                                     <p className="font-semibold text-teal-300 drop-shadow-lg">
                                         That moment when my first React component rendered? I knew I was home.
                                     </p>

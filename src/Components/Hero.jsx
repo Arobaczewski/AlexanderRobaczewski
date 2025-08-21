@@ -27,7 +27,7 @@
  * - Technical execution showcases frontend development expertise
  */
 
-import { Github, Linkedin, Download, Contact } from "lucide-react"
+import { Github, Linkedin, Download, Contact, FolderOpenDot } from "lucide-react"
 
 const Hero = () => {
     return (
@@ -217,6 +217,18 @@ const Hero = () => {
                              * VISUAL PROMINENCE: Gradient styling makes resume download highly visible
                              * PROGRESSIVE ENHANCEMENT: gap-2 to gap-3 creates subtle animation feedback
                              */}
+                             <a 
+                                href="#projects"
+                                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-600 hover:to-teal-400 hover:shadow-2xl hover:shadow-teal-400/40 rounded-full text-white font-semibold uppercase tracking-wider text-sm gap-2 hover:gap-3 transition-all duration-300 group shadow-lg"
+                            >
+                                View Projects
+                                {/* 
+                                 * DOWNLOAD ICON - Clear action indication
+                                 * UNIVERSAL SYMBOL: Download icon immediately communicates file retrieval
+                                 * SIZE CONSISTENCY: w-4 h-4 matches contact button icon for visual harmony
+                                 */}
+                                <FolderOpenDot className="w-4 h-4" />    
+                            </a>
                             <a 
                                 href="/Alexander_Robaczewski_Resume.pdf" 
                                 target="_blank"
