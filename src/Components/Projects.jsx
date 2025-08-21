@@ -479,7 +479,7 @@ const ProjectsTimeline = () => {
                                          */}
                                         <div className="mb-4 rounded-lg overflow-hidden">
                                             <img
-                                                className="w-full p-2 rounded-2xl h-48 object-cover"
+                                                className="w-screen p-2 rounded-2xl h-48 object-cover"
                                                 src={project.img}
                                                 alt={`${project.title} project preview`}
                                             />
