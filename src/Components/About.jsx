@@ -266,7 +266,7 @@ const About = () => {
                         {/* 
                          * CURRENTLY LEARNING - Shows growth trajectory and future value
                          * STRATEGIC LEARNING: Full-stack path indicates comprehensive development goals
-                         * MODERN STACK: Node.js, PostgreSQL, Next.js show industry-relevant learning
+                         * MODERN STACK: C#, MSSQL, Next.js show industry-relevant learning
                          */}
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>

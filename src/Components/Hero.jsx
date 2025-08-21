@@ -27,7 +27,7 @@
  * - Technical execution showcases frontend development expertise
  */
 
-import { Github, Linkedin, Instagram, Facebook, Download, Contact } from "lucide-react"
+import { Github, Linkedin, Download, Contact } from "lucide-react"
 
 const Hero = () => {
     return (
@@ -179,31 +179,6 @@ const Hero = () => {
                                     aria-label="LinkedIn"
                                 >
                                     <Linkedin className="w-6 h-6" />
-                                </a>
-                                {/* 
-                                 * INSTAGRAM LINK - Personal brand and personality
-                                 * PERSONALITY: Shows personal side and work-life balance
-                                 * AUTHENTICITY: Demonstrates genuine person behind the professional facade
-                                 * CULTURAL FIT: Helps employers assess personality alignment
-                                 */}
-                                <a 
-                                    href="https://www.instagram.com/arobaczewski/"
-                                    className="text-teal-400 hover:text-white hover:scale-125 transition-all duration-300 drop-shadow-lg hover:drop-shadow-2xl"
-                                    aria-label="Instagram"
-                                >
-                                    <Instagram className="w-6 h-6" />
-                                </a>
-                                {/* 
-                                 * FACEBOOK LINK - Extended social presence
-                                 * COMPREHENSIVE PRESENCE: Shows established online identity
-                                 * ACCESSIBILITY: Provides additional contact avenue for different user preferences
-                                 */}
-                                <a 
-                                    href="https://www.facebook.com/alex.robaczewski"
-                                    className="text-teal-400 hover:text-white hover:scale-125 transition-all duration-300 drop-shadow-lg hover:drop-shadow-2xl"
-                                    aria-label="Facebook"
-                                >
-                                    <Facebook className="w-6 h-6" />
                                 </a>
                             </div>
                         </div>

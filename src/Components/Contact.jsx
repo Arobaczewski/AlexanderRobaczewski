@@ -23,7 +23,7 @@
  * - Debugging capabilities demonstrate professional troubleshooting skills
  */
 
-import { Mail, Phone, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
+import { Mail, MapPin, Github, Linkedin, Send, User, MessageSquare } from "lucide-react"
 import { useState, useEffect } from "react"
 
 const Contact = () => {
@@ -231,7 +231,7 @@ const Contact = () => {
             }
 
             /*
-             * NOTIFICATION EMAIL - This works correctly
+             * NOTIFICATION EMAIL
              * Sends notification to you when someone fills out the form
              */
             const notificationResult = await emailjs.send(
@@ -420,7 +420,7 @@ const Contact = () => {
                                 <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                 <div className="relative flex items-center gap-4 p-4 backdrop-blur-md bg-white/5 rounded-xl border border-white/10 hover:border-teal-400/50 transition-all duration-300 shadow-lg">
                                     <div className="w-12 h-12 bg-gradient-to-r from-teal-400 to-teal-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                                        <Phone className="w-6 h-6 text-white" />
+                                        <Linkedin className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
                                         <p className="text-gray-300 text-sm font-medium">Linkedin</p>
