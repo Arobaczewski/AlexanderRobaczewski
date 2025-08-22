@@ -221,7 +221,7 @@ const Hero = () => {
                                 href="#projects"
                                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-600 hover:to-teal-400 hover:shadow-2xl hover:shadow-teal-400/40 rounded-full text-white font-semibold uppercase tracking-wider text-sm gap-2 hover:gap-3 transition-all duration-300 group shadow-lg"
                             >
-                                View Projects
+                                Projects
                                 {/* 
                                  * DOWNLOAD ICON - Clear action indication
                                  * UNIVERSAL SYMBOL: Download icon immediately communicates file retrieval
