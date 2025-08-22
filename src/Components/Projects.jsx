@@ -18,7 +18,7 @@
  * - Real business problem solving (Tip Calculator workplace implementation)
  * - API integration expertise (WeatherBeatz multi-API orchestration)
  * - Advanced eCommerce development (Robo's Wishlist frontend mastery)
- * - Full-stack development progression (Robo's Wishlist Pt 2 with backend integration)
+ * - Full-stack development progression (Robo's Wishlist Pt 2 with .NET backend integration)
  * - Personal branding mastery (Portfolio showcasing 3D graphics and modern design)
  * - Project management skills (timeline, scope, delivery tracking)
  * - Production deployment experience (live, working applications)
@@ -29,8 +29,9 @@
  * - Dynamic content rendering with category-based styling
  * - Advanced CSS animations and micro-interactions
  * - Full-stack development with C#/.NET backend integration
- * - Cloud deployment and database management
+ * - Cloud deployment and database management with Entity Framework Core
  * - Modern TypeScript and Next.js expertise
+ * - Enterprise-grade authentication with JWT implementation
  * - Strategic information architecture for optimal user engagement
  */
 
@@ -48,14 +49,14 @@ const ProjectsTimeline = () => {
      * 2. WeatherBeatz: Shows API integration skills and creative thinking
      * 3. Robo's Wishlist: Proves comprehensive frontend eCommerce capabilities
      * 4. Portfolio Website: Demonstrates personal branding, 3D graphics, and domain management
-     * 5. Robo's Wishlist Pt 2: Showcases full-stack development with modern tech stack
+     * 5. Robo's Wishlist Pt 2: Showcases full-stack development with enterprise-grade .NET backend
      * 
      * SKILL PROGRESSION TIMELINE:
      * - Frontend fundamentals (React, JavaScript, CSS)
      * - API integration and external service orchestration
-     * - Advanced frontend with state management
-     * - Professional branding and 3D graphics
-     * - Full-stack development with cloud deployment
+     * - Advanced frontend with state management and eCommerce features
+     * - Professional branding and 3D graphics integration
+     * - Full-stack development with .NET backend, EF Core ORM, and cloud deployment
      */
     const projects = [
         {
@@ -209,9 +210,9 @@ const ProjectsTimeline = () => {
              * FULL-STACK DEVELOPMENT MASTERY - Complete application architecture
              * MODERN TECH STACK: Next.js, TypeScript, and C#/.NET backend integration
              * CLOUD DEPLOYMENT: Azure and Vercel demonstrate enterprise-level deployment
-             * AUTHENTICATION: User management and security implementation
+             * AUTHENTICATION: JWT-based user management and security implementation
              * PAYMENT INTEGRATION: Stripe checkout shows real-world eCommerce capability
-             * DATABASE MANAGEMENT: MSSQL with Prisma ORM demonstrates data architecture
+             * DATABASE MANAGEMENT: MSSQL with Entity Framework Core demonstrates enterprise data architecture
              */
             description: "Full-stack e-commerce wishlist application built with Next.js, TypeScript, and TailwindCSS on the frontend, with a C#/.NET backend and MSSQL database, featuring authentication, cart management, Stripe test checkout, and cloud deployment via Vercel and Azure.",
             impact: "Full-Stack Showcase",
@@ -222,15 +223,16 @@ const ProjectsTimeline = () => {
              * STATE MANAGEMENT: Zustand and Redux show multiple state management approaches
              * PAYMENT: Stripe integration demonstrates real-world payment processing
              * BACKEND: .NET and MSSQL show enterprise backend development
-             * ORM: Prisma demonstrates modern database management
+             * ORM: Entity Framework Core demonstrates Microsoft's enterprise ORM solution
+             * AUTHENTICATION: JWT shows secure, stateless authentication implementation
              * CLOUD: Azure deployment shows enterprise cloud infrastructure
              */
-            techStack: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion", "Zustand", "Redux", "Stripe", "MSSQL", "Prisma", ".Net", "Azure"],
+            techStack: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion", "Zustand", "Redux", "Stripe", "MSSQL", "EF Core", "JWT", ".Net", "Azure"],
             features: [
-                "User Authentication",       // Secure user management and session handling
-                "Checkout Flow",            // Complete payment processing with Stripe
+                "User Authentication",       // Secure JWT-based user management and session handling
+                "Checkout Flow",            // Complete payment processing with Stripe integration
                 "Responsive Design",        // Cross-device compatibility and modern UX
-                "Back End Integration",     // API development and database management
+                "Back End Integration",     // RESTful API development and database management
                 "Cart Management",          // Complex state management for shopping functionality
                 "Cloud Deployment"          // Enterprise-level deployment and scaling
             ],
@@ -246,7 +248,14 @@ const ProjectsTimeline = () => {
      * BUSINESS STRATEGY: Icons enable immediate project type identification
      * USER EXPERIENCE: Visual cues improve content scannability and comprehension
      * SCALABILITY: Switch statement allows easy addition of new project categories
-     * UPDATED MAPPINGS: Added Briefcase for portfolio, Code for full-stack distinction
+     * SIMPLIFIED APPROACH: Unified teal gradient provides consistent visual identity
+     * 
+     * UPDATED MAPPINGS: 
+     * - Award icon for business value projects
+     * - Code icon for technical/API integration projects
+     * - Users icon for eCommerce and user-focused applications
+     * - Briefcase icon for personal branding and portfolio projects
+     * - Code icon for full-stack development (emphasizing technical complexity)
      */
     const getCategoryIcon = (category) => {
         switch(category) {
@@ -402,9 +411,10 @@ const ProjectsTimeline = () => {
                                                 <div className="flex items-center gap-2">
                                                     {/* 
                                                      * CATEGORY ICON CONTAINER - Visual project type identification
-                                                     * DYNAMIC STYLING: getCategoryColor provides unique visual identity per project type
+                                                     * UNIFIED STYLING: Consistent teal gradient provides cohesive visual identity
                                                      * IMMEDIATE RECOGNITION: Icon enables quick project categorization
-                                                     * VISUAL IMPACT: Gradient backgrounds add depth and sophistication
+                                                     * VISUAL IMPACT: Gradient background adds depth and sophistication
+                                                     * SIMPLIFIED APPROACH: Single color scheme reduces visual complexity
                                                      */}
                                                     <div className={`p-2 rounded-lg bg-gradient-to-r from-teal-400 to-teal-600 shadow-lg`}>
                                                         {getCategoryIcon(project.category)}
@@ -456,8 +466,10 @@ const ProjectsTimeline = () => {
                                          * PROJECT IMAGE PREVIEW - Visual project showcase
                                          * ENGAGEMENT: Images provide immediate visual context and increase engagement
                                          * DESIGN SHOWCASE: Demonstrates UI/UX design capabilities
-                                         * ACCESSIBILITY: Alt text should be added for screen readers
-                                         * RESPONSIVE: object-cover maintains aspect ratio across different screen sizes
+                                         * ACCESSIBILITY: Alt text provides screen reader compatibility
+                                         * RESPONSIVE: object-contain preserves full image visibility on all screen sizes
+                                         * MOBILE OPTIMIZATION: Fixed height with object-contain prevents cropping/zooming issues
+                                         * OVERFLOW HANDLING: overflow-auto allows scrolling if needed for large images
                                          */}
                                         <div className="mb-4 rounded-lg overflow-hidden">
                                             <img
@@ -504,6 +516,7 @@ const ProjectsTimeline = () => {
                                              * INTERACTIVE DESIGN: Hover effects encourage exploration
                                              * VISUAL ORGANIZATION: Tags provide scannable skill overview
                                              * EMPLOYER VALUE: Shows technical breadth and modern tool usage
+                                             * ENTERPRISE FOCUS: EF Core and JWT highlight enterprise-grade development
                                              */}
                                             <div className="mb-4">
                                                 <p className="text-gray-300 text-sm font-medium mb-2 drop-shadow-md">Tech Stack:</p>
@@ -661,6 +674,7 @@ const ProjectsTimeline = () => {
  * - Team collaboration projects (showing teamwork and leadership skills)
  * - Enterprise-level applications (demonstrating scalability awareness)
  * - DevOps and CI/CD pipeline projects (showing deployment expertise)
+ * - Microservices architecture demonstrations (enterprise backend patterns)
  * 
  * PROFESSIONAL DEVELOPMENT TRACKING:
  * - Technology adoption timeline (showing learning curve and adaptation speed)
@@ -678,12 +692,34 @@ const ProjectsTimeline = () => {
  * - Responsive design testing across multiple device types
  * - Performance budgets for animation and interaction effects
  * 
- * FUTURE FULL-STACK DEVELOPMENT SHOWCASE:
- * - Database schema design and optimization projects
- * - API design and documentation examples
- * - Security implementation and authentication flows
- * - Microservices architecture demonstrations
- * - Cloud infrastructure and deployment automation
- * - Real-time features using WebSockets or Server-Sent Events
+ * ENTERPRISE DEVELOPMENT SHOWCASE (EF CORE & JWT FOCUS):
+ * - Database schema design and optimization with Entity Framework Core
+ * - RESTful API design and documentation examples
+ * - JWT-based authentication and authorization implementation
+ * - Enterprise security patterns and best practices
+ * - Cloud infrastructure and deployment automation with Azure
+ * - Real-time features using SignalR or WebSockets
+ * - Performance optimization and caching strategies
+ * - Code-first database migrations with EF Core
+ * - Unit testing and integration testing patterns
+ * - Enterprise logging and monitoring implementations
+ * 
+ * EF CORE ADVANTAGES HIGHLIGHTED:
+ * - Microsoft's flagship ORM demonstrating enterprise standards
+ * - Seamless integration with .NET ecosystem and Azure services
+ * - Strong typing and compile-time checking with C#
+ * - Advanced querying capabilities with LINQ
+ * - Robust migration system for database versioning
+ * - Enterprise-grade performance optimization features
+ * - Native support for complex relationships and inheritance
+ * - Comprehensive logging and debugging capabilities
+ * 
+ * JWT AUTHENTICATION BENEFITS:
+ * - Stateless authentication ideal for distributed systems
+ * - Cross-platform compatibility and standards compliance
+ * - Secure token-based authentication with expiration handling
+ * - Role-based authorization and claims management
+ * - Scalable authentication suitable for microservices
+ * - Industry-standard security implementation
  */
 export default ProjectsTimeline
