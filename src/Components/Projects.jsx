@@ -236,8 +236,8 @@ const ProjectsTimeline = () => {
                 "Cart Management",          // Complex state management for shopping functionality
                 "Cloud Deployment"          // Enterprise-level deployment and scaling
             ],
-            liveUrl: "https://alexrobo.dev/", 
-            githubUrl: "https://github.com/Arobaczewski",
+            liveUrl: "https://github.com/Arobaczewski/RobosWishlist", 
+            githubUrl: "https://github.com/Arobaczewski/RobosWishlist",
             status: "In Progress",              // Active development project
             category: "fullstack"               // Full-stack development categorization
         }
