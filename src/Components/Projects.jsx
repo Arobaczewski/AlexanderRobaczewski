@@ -125,7 +125,7 @@ const ProjectsTimeline = () => {
             ],
             liveUrl: "https://weatherbeatz.netlify.app/",
             githubUrl: "https://github.com/Arobaczewski/WeatherBeats",
-            status: "Live",                       // Deployed and functional
+            status: "API",                       // Deployed and functional
             category: "api"                       // API integration focus
         },
         {
@@ -160,7 +160,7 @@ const ProjectsTimeline = () => {
             ],
             liveUrl: "https://roboswishlist.netlify.app/", 
             githubUrl: "https://github.com/Arobaczewski/eCommerce",
-            status: "Live",                   // Active showcase project
+            status: "Ecommerce",                   // Active showcase project
             category: "ecommerce"             // eCommerce development categorization
         },
         {
@@ -196,7 +196,7 @@ const ProjectsTimeline = () => {
             ],
             liveUrl: "https://alexrobo.dev/", 
             githubUrl: "https://github.com/Arobaczewski/AlexanderRobaczewski",
-            status: "Live",                   // Active personal brand showcase
+            status: "Personal Brand",                   // Active personal brand showcase
             category: "portfolio"             // Personal branding categorization
         },
         {
