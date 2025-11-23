@@ -201,46 +201,66 @@ const ProjectsTimeline = () => {
         },
         {
             id: 5,
-            title: "Robo's Wishlist Pt 2",
-            subtitle: "Full-Stack Application",
-            date: "EST October 2025", 
-            type: "Full-Stack Ecommerce",
-            img: "/comingsoon.png",
-            /*
-             * FULL-STACK DEVELOPMENT MASTERY - Complete application architecture
-             * MODERN TECH STACK: Next.js, TypeScript, and C#/.NET backend integration
-             * CLOUD DEPLOYMENT: Azure and Vercel demonstrate enterprise-level deployment
-             * AUTHENTICATION: JWT-based user management and security implementation
-             * PAYMENT INTEGRATION: Stripe checkout shows real-world eCommerce capability
-             * DATABASE MANAGEMENT: MSSQL with Entity Framework Core demonstrates enterprise data architecture
-             */
-            description: "Full-stack e-commerce wishlist application built with Next.js, TypeScript, and TailwindCSS on the frontend, with a C#/.NET backend and MSSQL database, featuring authentication, cart management, Stripe test checkout, and cloud deployment via Vercel and Azure.",
-            impact: "Full-Stack Showcase",
-            /*
-             * ENTERPRISE-GRADE TECHNOLOGY STACK - Complete development ecosystem
-             * FRONTEND: Next.js, TypeScript show modern React and type safety
-             * STYLING: Tailwind CSS and Framer Motion demonstrate advanced UI/animation
-             * STATE MANAGEMENT: Zustand and Redux show multiple state management approaches
-             * PAYMENT: Stripe integration demonstrates real-world payment processing
-             * BACKEND: .NET and MSSQL show enterprise backend development
-             * ORM: Entity Framework Core demonstrates Microsoft's enterprise ORM solution
-             * AUTHENTICATION: JWT shows secure, stateless authentication implementation
-             * CLOUD: Azure deployment shows enterprise cloud infrastructure
-             */
-            techStack: ["TypeScript", "Next.js", "Tailwind CSS", "Framer Motion", "Zustand", "Redux", "Stripe", "MSSQL", "EF Core", "JWT", ".Net", "Azure"],
-            features: [
-                "User Authentication",       // Secure JWT-based user management and session handling
-                "Checkout Flow",            // Complete payment processing with Stripe integration
-                "Responsive Design",        // Cross-device compatibility and modern UX
-                "Back End Integration",     // RESTful API development and database management
-                "Cart Management",          // Complex state management for shopping functionality
-                "Cloud Deployment"          // Enterprise-level deployment and scaling
+            title: "Robo's Wishlist",
+            subtitle: "Ecommerce Frontend Demo",
+            date: "November 2025",
+            type: "Ecommerce Application",
+            img: "/robostech.png",
+            description:
+                "A fully responsive Next.js + TypeScript ecommerce storefront featuring authentication, dynamic product browsing, favorites, cart management, and a complete mock checkout experience powered by a custom demo backend. Built to emulate a real-world production ecommerce flow.",
+            impact: "End-to-end ecommerce experience with modern frontend architecture",
+            techStack: [
+                "Next.js",
+                "TypeScript",
+                "Tailwind CSS",
+                "Redux Toolkit",
+                "Framer Motion",
+                "JWT (Demo)",
+                "Vercel"
             ],
-            liveUrl: "https://github.com/Arobaczewski/RobosWishlist", 
+            features: [
+                "User authentication (demo backend)",
+                "Favorites system with persistence",
+                "Cart management with variant handling",
+                "Dynamic product filtering and categories",
+                "Guest & user checkout flow",
+                "Order confirmation & order history",
+                "Responsive UI and mobile-optimized modals"
+            ],
+            liveUrl: "https://robos-wishlist.vercel.app/",
             githubUrl: "https://github.com/Arobaczewski/RobosWishlist",
-            status: "In Progress",              // Active development project
-            category: "fullstack"               // Full-stack development categorization
-        }
+            status: "Live Demo",
+            category: "ecommerce"
+        },
+        {
+            id: 6,
+            title: "Bloom Wellness Transition Landing Page",
+            subtitle: "Production Marketing Site",
+            date: "November 2025",
+            type: "Marketing / Landing Page",
+            img: "/bloom-logo.png",
+            description:
+                "A fast, responsive landing page built to announce AYR Wellness’ transition to Bloom Wellness and guide customers during the changeover. The page clearly communicates brand messaging, highlights local ownership, and funnels visitors to the live menu while the new ecommerce experience is under development.",
+            impact:
+                "Used in a live retail environment to communicate a major brand and system transition to thousands of customers, reduce confusion, and maintain trust during the changeover.",
+            techStack: [
+                "React",
+                "TypeScript",
+                "Tailwind CSS",
+                "Vite",
+                "Cloudflare Pages"
+            ],
+            features: [
+                "Clear messaging for brand + system transition",
+                "Responsive layout optimized for mobile customers",
+                "Sticky call-to-action redirecting to current online menu",
+                "Marketing copy tailored for locally owned positioning",
+                "Built and deployed under tight real-world timelines"
+            ],
+            liveUrl: "https://landing.bloom-wellness.com/", // drop in the real URL if it's public
+            status: "In Production",
+            category: "professional"
+        },
     ];
 
     /*
