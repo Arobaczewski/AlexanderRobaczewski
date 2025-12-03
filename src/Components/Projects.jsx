@@ -201,7 +201,7 @@ const ProjectsTimeline = () => {
         },
         {
             id: 5,
-            title: "Robo's Wishlist",
+            title: "Robo's Wishlist pt 2",
             subtitle: "Ecommerce Frontend Demo",
             date: "November 2025",
             type: "Ecommerce Application",
@@ -257,7 +257,8 @@ const ProjectsTimeline = () => {
                 "Marketing copy tailored for locally owned positioning",
                 "Built and deployed under tight real-world timelines"
             ],
-            liveUrl: "https://landing.bloom-wellness.com/", // drop in the real URL if it's public
+            liveUrl: "https://landing.bloom-wellness.com/",
+            githubUrl: "",
             status: "In Production",
             category: "professional"
         },
@@ -289,7 +290,7 @@ const ProjectsTimeline = () => {
     };
 
     return (
-        <section id="projects" className="py-16 lg:py-24 relative">
+        <section id="projects" className="py-12 lg:py-16 relative">
             {/* 
              * CONSISTENT VISUAL TREATMENT - Portfolio design language maintenance
              * DEPTH CREATION: Gradient overlay adds visual sophistication
@@ -305,11 +306,11 @@ const ProjectsTimeline = () => {
                  * VALUE PROPOSITION: Subtitle emphasizes progression from business problems to full-stack mastery
                  * VISUAL HIERARCHY: Glass card treatment maintains design consistency
                  */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <div className="relative group inline-block">
                         <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 via-teal-500/10 to-teal-600/20 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
-                        <div className="relative backdrop-blur-md bg-gradient-to-br from-white/10 to-white/5 p-8 rounded-3xl border border-white/20 shadow-2xl">
-                            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+                        <div className="relative backdrop-blur-md bg-gradient-to-br from-white/10 to-white/5 p-6 rounded-3xl border border-white/20 shadow-2xl">
+                            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
                                 {/* 
                                  * JOURNEY NARRATIVE - Personal development story emphasis
                                  * PSYCHOLOGY: "Journey" implies progress, growth, and destination
@@ -401,7 +402,7 @@ const ProjectsTimeline = () => {
                              * SPACING: ml-16 md:ml-0 mt-16 provides proper spacing around timeline node
                              * VISUAL BALANCE: Ensures cards don't overlap timeline elements
                              */}
-                            <div className={`w-full md:w-5/12 ml-16 md:ml-0 mt-16 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}>
+                            <div className={`w-full md:w-5/12 ml-16 md:ml-0 mt-8 ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}>
                                 <div className="relative group">
                                     {/* 
                                      * CARD GLOW EFFECT - Premium interaction feedback
@@ -426,7 +427,7 @@ const ProjectsTimeline = () => {
                                          * VISUAL ORGANIZATION: Flexbox layout ensures proper spacing and alignment
                                          * CATEGORY SYSTEM: Icon and color coding enable quick project type identification
                                          */}
-                                        <div className="p-6 pb-4">
+                                        <div className="p-5 pb-3">
                                             <div className="flex items-center justify-between mb-3">
                                                 <div className="flex items-center gap-2">
                                                     {/* 
@@ -493,7 +494,7 @@ const ProjectsTimeline = () => {
                                          */}
                                         <div className="mb-4 rounded-lg overflow-hidden">
                                             <img
-                                                className="w-full p-2 overflow-auto rounded-2xl h-48 object-contain"
+                                                className="w-full p-2 overflow-auto rounded-2xl h-40 object-contain"
                                                 src={project.img}
                                                 alt={`${project.title} project preview`}
                                             />
@@ -505,14 +506,14 @@ const ProjectsTimeline = () => {
                                          * VISUAL HIERARCHY: Consistent spacing and typography create readable flow
                                          * INFORMATION DENSITY: Balanced content that informs without overwhelming
                                          */}
-                                        <div className="px-6 pb-6">
+                                        <div className="px-5 pb-5">
                                             {/* 
                                              * PROJECT DESCRIPTION - Comprehensive project overview
                                              * BUSINESS FOCUS: Emphasizes real-world application and business value
                                              * READABILITY: leading-relaxed ensures comfortable reading experience
                                              * STORYTELLING: Each description tells a compelling project story
                                              */}
-                                            <p className="text-gray-200 leading-relaxed mb-4 drop-shadow-md">
+                                            <p className="text-gray-200 leading-relaxed mb-3 drop-shadow-md">
                                                 {project.description}
                                             </p>
 
@@ -524,7 +525,7 @@ const ProjectsTimeline = () => {
                                              */}
                                             <div className="relative">
                                                 <div className="absolute -inset-1 bg-teal-400/20 rounded-lg blur-sm opacity-50"></div>
-                                                <div className="relative backdrop-blur-md bg-teal-900/20 rounded-lg p-3 mb-4 border border-teal-500/20 shadow-lg">
+                                                <div className="relative backdrop-blur-md bg-teal-900/20 rounded-lg p-2.5 mb-3 border border-teal-500/20 shadow-lg">
                                                     <p className="text-teal-200 font-semibold text-sm drop-shadow-md">💡 Key Impact:</p>
                                                     <p className="text-white font-medium drop-shadow-md">{project.impact}</p>
                                                 </div>
@@ -538,7 +539,7 @@ const ProjectsTimeline = () => {
                                              * EMPLOYER VALUE: Shows technical breadth and modern tool usage
                                              * ENTERPRISE FOCUS: EF Core and JWT highlight enterprise-grade development
                                              */}
-                                            <div className="mb-4">
+                                            <div className="mb-3">
                                                 <p className="text-gray-300 text-sm font-medium mb-2 drop-shadow-md">Tech Stack:</p>
                                                 <div className="flex flex-wrap gap-2">
                                                     {project.techStack.map((tech, techIndex) => (
@@ -556,7 +557,7 @@ const ProjectsTimeline = () => {
                                              * CAPABILITY DEMONSTRATION: Each feature shows specific technical achievement
                                              * USER FOCUS: Features written from user benefit perspective
                                              */}
-                                            <div className="mb-6">
+                                            <div className="mb-4">
                                                 <p className="text-gray-300 text-sm font-medium mb-2 drop-shadow-md">Key Features:</p>
                                                 <div className="grid grid-cols-2 gap-1">
                                                     {project.features.map((feature, featureIndex) => (
@@ -605,15 +606,17 @@ const ProjectsTimeline = () => {
                                                  * GITHUB INTEGRATION: Direct link to repository for code review
                                                  * DEVELOPER APPEAL: Shows openness to code review and collaboration
                                                  */}
-                                                <a
-                                                    href={project.githubUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center gap-2 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 hover:border-teal-400/50 text-gray-200 hover:text-teal-200 rounded-lg font-medium transition-all duration-200 group/btn shadow-lg"
-                                                >
-                                                    <Github className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" />
-                                                    Code
-                                                </a>
+                                                {project.githubUrl && (
+                                                    <a
+                                                        href={project.githubUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-2 px-4 py-2 backdrop-blur-md bg-white/10 border border-white/20 hover:border-teal-400/50 text-gray-200 hover:text-teal-200 rounded-lg font-medium transition-all duration-200 group/btn shadow-lg"
+                                                    >
+                                                        <Github className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-200" />
+                                                        Code
+                                                    </a>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -630,7 +633,7 @@ const ProjectsTimeline = () => {
                  * ENGAGEMENT: Pulsing animation maintains dynamic feel and suggests activity
                  * EMPLOYER APPEAL: Indicates continuous learning and project development
                  */}
-                <div className="text-center mt-16">
+                <div className="text-center mt-10">
                     <div className="relative group">
                         <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/20 to-teal-600/20 rounded-2xl blur-lg opacity-75"></div>
                         <div className="relative backdrop-blur-md bg-gradient-to-r from-teal-600/20 to-teal-500/20 rounded-xl border border-teal-500/30 px-6 py-3 shadow-xl">
