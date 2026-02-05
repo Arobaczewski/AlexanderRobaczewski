@@ -230,7 +230,7 @@ const Hero = () => {
                                 <FolderOpenDot className="w-4 h-4" />    
                             </a>
                             <a 
-                                href="/Alex's_Resume.pdf" 
+                                href="/Alex's_Resume_2.pdf" 
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-600 hover:to-teal-400 hover:shadow-2xl hover:shadow-teal-400/40 rounded-full text-white font-semibold uppercase tracking-wider text-sm gap-2 hover:gap-3 transition-all duration-300 group shadow-lg"

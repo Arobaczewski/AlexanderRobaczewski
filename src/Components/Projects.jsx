@@ -234,15 +234,15 @@ const ProjectsTimeline = () => {
         },
         {
             id: 6,
-            title: "Bloom Wellness Transition Landing Page",
-            subtitle: "Production Marketing Site",
+            title: "Bloom Wellness Transition & Promo Code Experience",
+            subtitle: "Production Marketing + Interactive Customer Funnel",
             date: "November 2025",
-            type: "Marketing / Landing Page",
+            type: "Marketing Site / Conversion Flow",
             img: "/bloom-logo.png",
             description:
-                "A fast, responsive landing page built to announce AYR Wellness’ transition to Bloom Wellness and guide customers during the changeover. The page clearly communicates brand messaging, highlights local ownership, and funnels visitors to the live menu while the new ecommerce experience is under development.",
+                "A production landing page that evolved into an interactive promo code experience to guide customers through AYR Wellness’ transition to Bloom Wellness. The project began as a brand announcement hub and expanded into a functional funnel where customers could enter promo codes, receive rewards, and be redirected to the live menu while the full ecommerce platform was in development.",
             impact:
-                "Used in a live retail environment to communicate a major brand and system transition to thousands of customers, reduce confusion, and maintain trust during the changeover.",
+                "Used by thousands of real customers during a live retail system transition to reduce confusion, reinforce local ownership messaging, capture promotions, and drive continued online ordering activity.",
             techStack: [
                 "React",
                 "TypeScript",
@@ -251,17 +251,18 @@ const ProjectsTimeline = () => {
                 "Cloudflare Pages"
             ],
             features: [
-                "Clear messaging for brand + system transition",
-                "Responsive layout optimized for mobile customers",
-                "Sticky call-to-action redirecting to current online menu",
-                "Marketing copy tailored for locally owned positioning",
-                "Built and deployed under tight real-world timelines"
+                "Transitioned from static landing page into interactive promo code flow",
+                "Real-time customer funnel directing users to live ordering platform",
+                "Mobile-first responsive layout optimized for in-store and web traffic",
+                "Clear transition messaging with locally owned branding focus",
+                "High-conversion call-to-actions built for real production traffic",
+                "Rapid deployment under tight business deadlines"
             ],
             liveUrl: "https://landing.bloom-wellness.com/",
             githubUrl: "",
             status: "In Production",
             category: "professional"
-        },
+            },
     ];
 
     /*
